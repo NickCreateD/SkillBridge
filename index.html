@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillBridge | Academia-Industry Collaboration Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{
+  --indigo-900:#1E1B4B; --indigo-800:#2D2A73; --indigo-700:#3730A3; --indigo-600:#4F46E5;
+  --indigo-500:#6366F1; --indigo-100:#E0E3FA; --indigo-50:#F1F2FD;
+  --sky-500:#0EA5E9; --sky-100:#DFF3FC;
+  --emerald-500:#10B981; --emerald-100:#DCFCE9;
+  --amber-500:#F59E0B; --amber-100:#FEF3DA;
+  --rose-500:#F43F5E; --rose-100:#FEE2E7;
+  --purple-500:#8B5CF6; --purple-100:#EDE9FE;
+  --slate-900:#0F172A; --slate-700:#334155; --slate-500:#64748B; --slate-400:#94A3B8;
+  --slate-200:#E2E8F0; --slate-100:#F1F5F9; --slate-50:#F8FAFC; --white:#FFFFFF;
+  --radius-lg:20px; --radius-md:14px; --radius-sm:10px;
+  --shadow-card:0 1px 2px rgba(15,23,42,.04), 0 8px 24px -12px rgba(30,27,75,.12);
+  --shadow-pop:0 20px 45px -15px rgba(30,27,75,.28);
+  --font-display:'Sora',sans-serif; --font-body:'Inter',sans-serif; --font-mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;scroll-behavior:smooth;}
+body{font-family:var(--font-body);color:var(--slate-900);background:var(--slate-50);-webkit-font-smoothing:antialiased;}
+h1,h2,h3,h4,h5{font-family:var(--font-display);margin:0;letter-spacing:-0.01em;}
+p{margin:0;}
+a{text-decoration:none;color:inherit;}
+button{font-family:var(--font-body);cursor:pointer;border:none;background:none;}
+ul{list-style:none;margin:0;padding:0;}
+.page{display:none;}
+.page.active{display:block;}
+.mono{font-family:var(--font-mono);}
+::-webkit-scrollbar{width:8px;height:8px;}
+::-webkit-scrollbar-thumb{background:var(--slate-200);border-radius:8px;}
+
+/* ---------- Buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:12px;font-weight:600;font-size:14.5px;transition:.15s ease;white-space:nowrap;}
+.btn-primary{background:var(--indigo-600);color:#fff;}
+.btn-primary:hover{background:var(--indigo-700);transform:translateY(-1px);}
+.btn-outline{background:#fff;color:var(--indigo-700);border:1.5px solid var(--indigo-100);}
+.btn-outline:hover{border-color:var(--indigo-500);background:var(--indigo-50);}
+.btn-ghost{background:transparent;color:var(--slate-700);border:1.5px solid var(--slate-200);}
+.btn-ghost:hover{background:var(--slate-100);}
+.btn-success{background:var(--emerald-500);color:#fff;}
+.btn-success:hover{background:#059669;}
+.btn-sm{padding:8px 14px;font-size:13px;border-radius:10px;}
+.btn-xs{padding:5px 10px;font-size:11.5px;border-radius:7px;}
+.btn-block{width:100%;}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;font-size:12.5px;font-weight:600;}
+.pill-indigo{background:var(--indigo-100);color:var(--indigo-700);}
+.pill-emerald{background:var(--emerald-100);color:#067A55;}
+.pill-amber{background:var(--amber-100);color:#92610A;}
+.pill-rose{background:var(--rose-100);color:#B91C3C;}
+.pill-sky{background:var(--sky-100);color:#0369A1;}
+.pill-slate{background:var(--slate-100);color:var(--slate-500);}
+
+/* ---------- Card ---------- */
+.card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-md);box-shadow:var(--shadow-card);}
+.card-pad{padding:22px;}
+
+/* ================= LANDING ================= */
+.nav{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--slate-200);}
+.nav-inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:16px 28px;}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:700;font-size:19px;cursor:pointer;}
+.brand-mark{width:34px;height:34px;flex-shrink:0;}
+.nav-links{display:flex;gap:28px;align-items:center;}
+.nav-links a{font-size:14.5px;font-weight:500;color:var(--slate-700);transition:color .15s;}
+.nav-links a:hover{color:var(--indigo-700);}
+.nav-cta{display:flex;gap:10px;}
+
+.hero{position:relative;overflow:hidden;background:linear-gradient(180deg,#F1F2FD 0%,#F8FAFC 65%);}
+.hero-inner{max-width:1180px;margin:0 auto;padding:78px 28px 40px;display:grid;grid-template-columns:1.05fr 0.95fr;gap:40px;align-items:center;}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--indigo-700);background:#fff;border:1px solid var(--indigo-100);padding:7px 14px;border-radius:999px;margin-bottom:22px;}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--emerald-500);box-shadow:0 0 8px var(--emerald-500);}
+.hero h1{font-size:52px;line-height:1.08;font-weight:800;color:var(--slate-900);}
+.hero h1 span{color:var(--indigo-600);background:linear-gradient(120deg,var(--indigo-600),var(--sky-500));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero-sub{margin-top:20px;font-size:18px;color:var(--slate-500);max-width:520px;line-height:1.6;}
+.hero-ctas{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap;}
+.hero-note{margin-top:18px;font-size:13px;color:var(--slate-400);}
+
+.bridge-wrap{position:relative;height:420px;}
+.bridge-wrap svg{width:100%;height:100%;}
+.node-tag{position:absolute;background:#fff;border:1px solid var(--slate-200);border-radius:12px;padding:8px 12px;font-size:12.5px;font-weight:600;box-shadow:var(--shadow-card);display:flex;align-items:center;gap:7px;transition:.2s;}
+.node-tag:hover{transform:scale(1.05);box-shadow:var(--shadow-pop);}
+
+.stats-bar{background:var(--indigo-900);}
+.stats-inner{max-width:1180px;margin:0 auto;padding:36px 28px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+.stat-item{text-align:left;color:#fff;}
+.stat-num{font-family:var(--font-display);font-size:34px;font-weight:700;color:#fff;}
+.stat-label{font-size:13.5px;color:#A5A9E8;margin-top:4px;}
+
+.section{max-width:1180px;margin:0 auto;padding:88px 28px;}
+.section-head{max-width:640px;margin-bottom:48px;}
+.section-tag{font-size:13px;font-weight:700;color:var(--indigo-600);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;}
+.section-title{font-size:32px;font-weight:700;line-height:1.2;}
+.section-desc{margin-top:12px;font-size:16px;color:var(--slate-500);line-height:1.6;}
+
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;counter-reset:step;}
+.how-card{position:relative;padding:26px 22px;border-radius:var(--radius-md);background:#fff;border:1px solid var(--slate-200);transition:.2s;}
+.how-card:hover{border-color:var(--indigo-500);transform:translateY(-3px);box-shadow:var(--shadow-card);}
+.how-step{font-family:var(--font-mono);font-size:13px;color:var(--indigo-500);font-weight:700;}
+.how-card h4{margin-top:14px;font-size:17px;}
+.how-card p{margin-top:8px;font-size:14px;color:var(--slate-500);line-height:1.55;}
+.how-arrow{position:absolute;right:-18px;top:50%;transform:translateY(-50%);color:var(--indigo-400);font-size:20px;z-index:2;}
+
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.feature-card{padding:26px;border-radius:var(--radius-md);border:1px solid var(--slate-200);background:#fff;transition:.2s;}
+.feature-card:hover{box-shadow:var(--shadow-card);transform:translateY(-3px);border-color:var(--indigo-100);}
+.feature-icon{width:44px;height:44px;border-radius:12px;background:var(--indigo-50);color:var(--indigo-600);display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:22px;}
+.feature-card h4{font-size:16.5px;}
+.feature-card p{margin-top:8px;font-size:14px;color:var(--slate-500);line-height:1.55;}
+.feature-card ul{margin-top:14px;display:flex;flex-direction:column;gap:8px;}
+.feature-card li{font-size:13.5px;color:var(--slate-700);display:flex;gap:8px;align-items:flex-start;}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
+.split.reverse .split-visual{order:2;}
+.split.reverse .split-copy{order:1;}
+.match-demo{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);padding:26px;box-shadow:var(--shadow-pop);}
+.match-demo .mdhead{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;}
+.skillbar-row{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.skillbar-row .sname{width:110px;font-size:13px;font-weight:600;color:var(--slate-700);flex-shrink:0;}
+.skillbar-track{flex:1;height:9px;background:var(--slate-100);border-radius:6px;overflow:hidden;}
+.skillbar-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,var(--indigo-500),var(--sky-500));transition:width .6s ease;}
+.skillbar-pct{width:40px;text-align:right;font-family:var(--font-mono);font-size:12.5px;color:var(--slate-500);font-weight:600;}
+
+.story-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.story-card{padding:24px;border-radius:var(--radius-md);background:#fff;border:1px solid var(--slate-200);display:flex;flex-direction:column;justify-content:space-between;}
+.story-quote{font-size:14.5px;color:var(--slate-700);line-height:1.6;font-style:normal;}
+.story-person{display:flex;align-items:center;gap:12px;margin-top:18px;}
+.avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#fff;flex-shrink:0;}
+.story-name{font-size:14px;font-weight:600;}
+.story-role{font-size:12.5px;color:var(--slate-400);}
+
+.cta-band{max-width:1180px;margin:0 auto 88px;padding:0 28px;}
+.cta-inner{background:linear-gradient(120deg,var(--indigo-700),var(--indigo-900));border-radius:28px;padding:56px;display:flex;justify-content:space-between;align-items:center;gap:24px;color:#fff;}
+.cta-inner h3{font-size:28px;color:#fff;max-width:520px;}
+.cta-inner p{color:#C7CAF3;margin-top:10px;font-size:15px;}
+
+.footer{border-top:1px solid var(--slate-200);background:#fff;}
+.footer-inner{max-width:1180px;margin:0 auto;padding:48px 28px;display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:32px;}
+.footer-inner h5{font-size:13px;font-weight:700;color:var(--slate-900);margin-bottom:14px;}
+.footer-inner li{font-size:13.5px;color:var(--slate-500);margin-bottom:10px;}
+.footer-bottom{border-top:1px solid var(--slate-200);padding:18px 28px;text-align:center;font-size:12.5px;color:var(--slate-400);}
+
+/* ================= LOGIN ================= */
+.login-wrap{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;}
+.login-side{background:linear-gradient(160deg,var(--indigo-900),var(--indigo-700) 70%);color:#fff;padding:56px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;}
+.login-side h2{font-size:30px;color:#fff;line-height:1.25;margin-top:40px;}
+.login-side p{color:#C7CAF3;margin-top:14px;font-size:15px;max-width:400px;line-height:1.6;}
+.login-form-wrap{display:flex;align-items:center;justify-content:center;padding:40px;position:relative;}
+.login-box{width:100%;max-width:420px;}
+.role-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;background:var(--slate-100);padding:5px;border-radius:12px;margin-bottom:28px;}
+.role-tab{padding:9px 4px;text-align:center;border-radius:9px;font-size:12px;font-weight:600;color:var(--slate-500);cursor:pointer;transition:.15s;}
+.role-tab.active{background:#fff;color:var(--indigo-700);box-shadow:0 1px 4px rgba(0,0,0,.08);}
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:13px;font-weight:600;color:var(--slate-700);margin-bottom:7px;}
+.field input,.field select,.field textarea{width:100%;padding:12px 14px;border:1.5px solid var(--slate-200);border-radius:10px;font-size:14px;font-family:var(--font-body);background:#fbfcfe;transition:border-color .2s;}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--indigo-500);background:#fff;}
+.login-meta{display:flex;justify-content:space-between;align-items:center;margin:14px 0 22px;font-size:13px;}
+.login-demo-note{margin-top:20px;padding:12px 14px;background:var(--indigo-50);border-radius:10px;font-size:12.5px;color:var(--indigo-700);line-height:1.5;}
+.stat-chip{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);padding:12px 16px;border-radius:12px;margin-top:12px;}
+.back-home{font-size:13px;color:var(--indigo-600);display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-weight:600;}
+
+/* ================= DASHBOARD SHELL ================= */
+.dash{display:grid;grid-template-columns:260px 1fr;min-height:100vh;}
+.sidebar{background:var(--indigo-900);color:#fff;padding:22px 16px;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto;}
+.sb-brand{display:flex;align-items:center;gap:10px;padding:6px 10px 22px;font-family:var(--font-display);font-weight:700;font-size:17px;cursor:pointer;}
+.sb-role{padding:10px 12px;background:rgba(255,255,255,.06);border-radius:12px;display:flex;align-items:center;gap:10px;margin-bottom:18px;}
+.sb-role .avatar{width:36px;height:36px;font-size:13px;}
+.sb-role .rn{font-size:13.5px;font-weight:600;color:#fff;}
+.sb-role .rr{font-size:11.5px;color:#A5A9E8;}
+.sb-nav{flex:1;display:flex;flex-direction:column;gap:3px;}
+.sb-link{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:10px;font-size:13.8px;font-weight:500;color:#C7CAF3;cursor:pointer;transition:.15s;}
+.sb-link .ic{width:20px;text-align:center;font-size:16px;}
+.sb-link:hover{background:rgba(255,255,255,.06);color:#fff;}
+.sb-link.active{background:rgba(255,255,255,.16);color:#fff;font-weight:600;}
+.sb-logout{margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.1);}
+
+.dmain{padding:26px 36px 60px;max-width:1380px;}
+.dtopbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px;flex-wrap:wrap;gap:14px;}
+.dtitle{font-size:24px;font-weight:700;}
+.dsub{font-size:13.5px;color:var(--slate-500);margin-top:4px;}
+.dtop-right{display:flex;align-items:center;gap:12px;}
+.icon-btn{width:40px;height:40px;border-radius:10px;background:#fff;border:1px solid var(--slate-200);display:flex;align-items:center;justify-content:center;position:relative;font-size:16px;cursor:pointer;}
+.badge-dot{position:absolute;top:6px;right:7px;width:7px;height:7px;background:var(--rose-500);border-radius:50%;}
+
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;}
+.kpi-card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-md);padding:18px 20px;position:relative;overflow:hidden;}
+.kpi-label{font-size:12.5px;color:var(--slate-500);font-weight:600;}
+.kpi-value{font-size:26px;font-weight:700;font-family:var(--font-display);margin-top:8px;}
+.kpi-delta{font-size:12px;margin-top:6px;font-weight:600;}
+.up{color:#067A55;}
+.down{color:#B91C3C;}
+
+.grid-2{display:grid;grid-template-columns:1.35fr 1fr;gap:18px;}
+.grid-2b{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.section-card-title{font-size:16px;font-weight:700;margin-bottom:2px;}
+.section-card-sub{font-size:12.5px;color:var(--slate-500);margin-bottom:16px;}
+
+.tabs-row{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+.tab-btn{padding:8px 16px;border-radius:10px;font-size:13.5px;font-weight:600;background:#fff;border:1.5px solid var(--slate-200);color:var(--slate-600);cursor:pointer;transition:.15s;}
+.tab-btn:hover{border-color:var(--indigo-400);}
+.tab-btn.active{background:var(--indigo-600);border-color:var(--indigo-600);color:#fff;}
+
+table{width:100%;border-collapse:collapse;}
+th{text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--slate-400);font-weight:700;padding:10px 12px;border-bottom:1px solid var(--slate-200);}
+td{padding:13px 12px;font-size:13.5px;border-bottom:1px solid var(--slate-100);color:var(--slate-700);}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--slate-50);}
+.tbl-wrap{overflow-x:auto;}
+
+.progress-track{height:8px;background:var(--slate-100);border-radius:6px;overflow:hidden;}
+.progress-fill{height:100%;border-radius:6px;background:var(--indigo-500);}
+
+.internship-card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-md);padding:20px;display:flex;flex-direction:column;gap:12px;transition:.2s;}
+.internship-card:hover{border-color:var(--indigo-400);box-shadow:var(--shadow-card);transform:translateY(-2px);}
+.internship-top{display:flex;justify-content:space-between;align-items:flex-start;}
+.company-logo{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#fff;flex-shrink:0;}
+.internship-meta{display:flex;flex-wrap:wrap;gap:10px;font-size:12.5px;color:var(--slate-500);}
+.internship-meta span{display:flex;align-items:center;gap:4px;}
+.skill-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.tag{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:8px;background:var(--slate-100);color:var(--slate-600);}
+.match-badge{display:flex;flex-direction:column;align-items:center;justify-content:center;width:56px;height:56px;border-radius:50%;flex-shrink:0;border:2px solid transparent;}
+.match-badge.high{background:var(--emerald-100);color:#067A55;border-color:var(--emerald-500);}
+.match-badge.mid{background:var(--indigo-100);color:var(--indigo-700);border-color:var(--indigo-500);}
+.match-badge.low{background:var(--amber-100);color:#92610A;border-color:var(--amber-500);}
+.match-badge .mv{font-family:var(--font-mono);font-weight:700;font-size:15px;line-height:1;}
+.match-badge .ml{font-size:9px;color:currentColor;margin-top:2px;}
+.card-actions{display:flex;gap:8px;margin-top:4px;}
+
+.filter-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;background:#fff;border:1px solid var(--slate-200);padding:14px;border-radius:var(--radius-md);align-items:center;}
+.filter-bar select,.filter-bar input{padding:9px 12px;border:1.5px solid var(--slate-200);border-radius:9px;font-size:13px;font-family:var(--font-body);background:#fbfcfe;}
+
+.timeline{display:flex;align-items:center;width:100%;margin:16px 0;}
+.tl-step{flex:1;display:flex;flex-direction:column;align-items:center;position:relative;}
+.tl-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;z-index:2;background:var(--slate-200);color:var(--slate-500);}
+.tl-dot.done{background:var(--indigo-600);color:#fff;}
+.tl-dot.now{background:var(--sky-500);color:#fff;box-shadow:0 0 0 4px var(--sky-100);}
+.tl-line{position:absolute;top:14px;left:-50%;width:100%;height:3px;background:var(--slate-200);z-index:1;}
+.tl-line.done{background:var(--indigo-500);}
+.tl-label{margin-top:8px;font-size:11.5px;font-weight:600;color:var(--slate-600);text-align:center;}
+.tl-step:first-child .tl-line{display:none;}
+
+.notif-item{display:flex;gap:14px;padding:14px 16px;border-bottom:1px solid var(--slate-100);align-items:flex-start;}
+.notif-item:last-child{border-bottom:none;}
+.notif-ic{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;background:var(--indigo-50);color:var(--indigo-600);}
+.notif-title{font-size:13.5px;font-weight:600;}
+.notif-desc{font-size:12.5px;color:var(--slate-500);margin-top:2px;}
+.notif-time{font-size:11px;color:var(--slate-400);margin-top:4px;}
+
+.ai-card{background:linear-gradient(120deg,var(--indigo-700),var(--indigo-900));border-radius:var(--radius-md);padding:24px;color:#fff;}
+.ai-card .tagline{font-size:12px;color:#A5A9E8;font-weight:700;text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;gap:8px;}
+
+/* ================= MODALS & TOASTS ================= */
+.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.6);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:100;opacity:0;pointer-events:none;transition:.2s;}
+.modal-overlay.open{opacity:1;pointer-events:auto;}
+.modal-box{background:#fff;border-radius:var(--radius-lg);width:90%;max-width:580px;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow-pop);transform:translateY(20px);transition:.2s;padding:28px;}
+.modal-overlay.open .modal-box{transform:translateY(0);}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+.modal-close{width:32px;height:32px;border-radius:8px;background:var(--slate-100);display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;color:var(--slate-500);}
+.modal-close:hover{background:var(--slate-200);color:var(--slate-900);}
+
+.toast-container{position:fixed;bottom:24px;right:24px;z-index:200;display:flex;flex-direction:column;gap:10px;pointer-events:none;}
+.toast{background:var(--slate-900);color:#fff;padding:12px 18px;border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,.2);display:flex;align-items:center;gap:12px;font-size:13.5px;font-weight:500;animation:toastIn .25s ease forwards;pointer-events:auto;}
+@keyframes toastIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+.toast.success{background:#065F46;border-left:4px solid var(--emerald-500);}
+.toast.info{background:var(--indigo-900);border-left:4px solid var(--indigo-500);}
+
+.quiz-option{padding:12px 16px;border:1.5px solid var(--slate-200);border-radius:10px;cursor:pointer;margin-bottom:10px;font-size:13.5px;transition:.15s;}
+.quiz-option:hover{border-color:var(--indigo-500);background:var(--indigo-50);}
+.quiz-option.selected{border-color:var(--indigo-600);background:var(--indigo-100);font-weight:600;color:var(--indigo-900);}
+
+@media(max-width:1080px){
+  .hero-inner{grid-template-columns:1fr;}
+  .bridge-wrap{height:280px;}
+  .stats-inner{grid-template-columns:repeat(2,1fr);}
+  .how-grid,.feature-grid,.story-grid,.grid-3{grid-template-columns:repeat(2,1fr);}
+  .split{grid-template-columns:1fr;}
+  .login-wrap{grid-template-columns:1fr;}
+  .login-side{display:none;}
+  .dash{grid-template-columns:76px 1fr;}
+  .sidebar .sb-role .rn,.sidebar .sb-role .rr{display:none;}
+  .sb-link{justify-content:center;}
+  .sb-link span:not(.ic){display:none;}
+  .kpi-grid,.grid-2,.grid-2b{grid-template-columns:1fr;}
+}
+@media(max-width:640px){
+  .how-grid,.feature-grid,.story-grid,.grid-3{grid-template-columns:1fr;}
+  .stats-inner{grid-template-columns:1fr;}
+  .nav-links{display:none;}
+  .dmain{padding:16px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================= LANDING ============================================================= -->
+<div id="page-landing" class="page active">
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="brand" onclick="goLanding()">
+        <svg class="brand-mark" viewBox="0 0 40 40"><path d="M4 26 C4 14, 14 8, 20 8 C26 8, 36 14, 36 26" stroke="#4F46E5" stroke-width="3.4" fill="none" stroke-linecap="round"/><circle cx="4" cy="26" r="3.4" fill="#0EA5E9"/><circle cx="36" cy="26" r="3.4" fill="#0EA5E9"/><circle cx="20" cy="8" r="3" fill="#4F46E5"/></svg>
+        SkillBridge
+      </div>
+      <div class="nav-links">
+        <a href="#" onclick="scrollToSection('how');return false;">How it works</a>
+        <a href="#" onclick="scrollToSection('skillmap');return false;">Skill mapping</a>
+        <a href="#" onclick="scrollToSection('collab');return false;">Industry collab</a>
+        <a href="#" onclick="scrollToSection('analytics');return false;">Analytics</a>
+        <a href="#" onclick="scrollToSection('stories');return false;">Success stories</a>
+      </div>
+      <div class="nav-cta">
+        <button class="btn btn-ghost btn-sm" onclick="goLogin('mentor')">Mentor login</button>
+        <button class="btn btn-primary btn-sm" onclick="goLogin('student')">Sign in</button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> Built for Smart India Hackathon 2026</div>
+        <h1>Bridging <span>Academia</span> and Industry</h1>
+        <p class="hero-sub">Map skills. Discover internships. Build careers. One platform connecting students, colleges, mentors and companies around a single source of truth: verified skill data.</p>
+        <div class="hero-ctas">
+          <button class="btn btn-primary" onclick="goLogin('student')">🎓 Student login</button>
+          <button class="btn btn-outline" onclick="goLogin('college')">🏛 College login</button>
+          <button class="btn btn-outline" onclick="goLogin('industry')">🏢 Industry login</button>
+        </div>
+        <p class="hero-note">Prototype build · dummy authentication · live demo data included</p>
+      </div>
+      <div class="bridge-wrap">
+        <svg viewBox="0 0 460 380" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="archGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#4F46E5"/><stop offset="1" stop-color="#0EA5E9"/>
+            </linearGradient>
+          </defs>
+          <path d="M40 300 C40 150, 160 90, 230 90 C300 90, 420 150, 420 300" fill="none" stroke="url(#archGrad)" stroke-width="5" stroke-linecap="round" opacity="0.9"/>
+          <line x1="40" y1="300" x2="40" y2="345" stroke="#C7CAF3" stroke-width="5" stroke-linecap="round"/>
+          <line x1="420" y1="300" x2="420" y2="345" stroke="#C7CAF3" stroke-width="5" stroke-linecap="round"/>
+          <line x1="10" y1="345" x2="70" y2="345" stroke="#1E1B4B" stroke-width="6" stroke-linecap="round"/>
+          <line x1="390" y1="345" x2="450" y2="345" stroke="#1E1B4B" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="90" cy="230" r="7" fill="#4F46E5"><animateMotion dur="3.4s" repeatCount="indefinite" path="M0 0 C10 -70, 90 -160, 140 -160"/></circle>
+          <circle cx="160" cy="150" r="6" fill="#0EA5E9"><animateMotion dur="4.1s" repeatCount="indefinite" path="M0 0 C40 -40, 140 -40, 190 10"/></circle>
+          <circle cx="380" cy="230" r="7" fill="#4F46E5"><animateMotion dur="3.8s" repeatCount="indefinite" path="M0 0 C-10 -70, -90 -160, -140 -160"/></circle>
+        </svg>
+        <div class="node-tag" style="top:8%;left:2%;">🎓 Student skills</div>
+        <div class="node-tag" style="top:2%;left:36%;">🌉 SkillBridge engine</div>
+        <div class="node-tag" style="top:8%;right:0%;">🏢 Industry demand</div>
+        <div class="node-tag" style="bottom:6%;left:15%;">🏛 250+ colleges</div>
+        <div class="node-tag" style="bottom:6%;right:8%;">📈 92% avg match</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats-bar">
+    <div class="stats-inner" id="statsBar"></div>
+  </div>
+
+  <section class="section" id="how">
+    <div class="section-head">
+      <div class="section-tag">How it works</div>
+      <h2 class="section-title">From raw skills to real outcomes, in four steps</h2>
+      <p class="section-desc">SkillBridge sits between what students know and what companies need — and closes the gap with data, not guesswork.</p>
+    </div>
+    <div class="how-grid" id="howGrid"></div>
+  </section>
+
+  <section class="section" id="skillmap" style="padding-top:0;">
+    <div class="split">
+      <div class="split-copy">
+        <div class="section-tag">Skill mapping</div>
+        <h2 class="section-title">Every student's proficiency, quantified and current</h2>
+        <p class="section-desc">Students self-report and get assessed on individual skills. SkillBridge keeps a live proficiency profile — refreshed with every assessment, certificate and completed internship.</p>
+        <ul style="margin-top:20px;display:flex;flex-direction:column;gap:12px;">
+          <li style="font-size:14.5px;color:var(--slate-700);">✅ Skill assessments across 40+ technical &amp; soft skills</li>
+          <li style="font-size:14.5px;color:var(--slate-700);">✅ Certificate verification &amp; auto skill-credit</li>
+          <li style="font-size:14.5px;color:var(--slate-700);">✅ Live gap analysis vs industry benchmarks</li>
+        </ul>
+      </div>
+      <div class="split-visual">
+        <div class="match-demo">
+          <div class="mdhead">
+            <div>
+              <div class="section-card-title">Priya Sharma</div>
+              <div class="section-card-sub">B.Tech CSE · Semester 6 · CGPA 8.8</div>
+            </div>
+            <span class="pill pill-indigo">Profile 88%</span>
+          </div>
+          <div id="heroSkillBars"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="section-head">
+      <div class="section-tag">Internship matching</div>
+      <h2 class="section-title">Recommendations ranked by real skill fit</h2>
+      <p class="section-desc">Every open internship is scored against a student's live skill profile — not just their branch or CGPA.</p>
+    </div>
+    <div class="grid-3" id="landingInternships"></div>
+  </section>
+
+  <section class="section" id="collab" style="padding-top:0;">
+    <div class="section-head">
+      <div class="section-tag">Industry collaboration</div>
+      <h2 class="section-title">A shared workspace for colleges and companies</h2>
+      <p class="section-desc">Partnerships that used to run over email — now tracked, measured, and renewed on one platform.</p>
+    </div>
+    <div class="feature-grid" id="collabGrid"></div>
+  </section>
+
+  <section class="section" id="analytics" style="padding-top:0;">
+    <div class="section-head">
+      <div class="section-tag">Placement analytics</div>
+      <h2 class="section-title">Skill demand vs. student availability</h2>
+      <p class="section-desc">The single chart every TPO opens first — where is the market moving, and are our students ready?</p>
+    </div>
+    <div class="grid-2">
+      <div class="card card-pad">
+        <div class="section-card-title">Skill demand vs. availability</div>
+        <div class="section-card-sub">Industry requirement (dark indigo) vs. student readiness (sky blue)</div>
+        <div style="height:260px;position:relative;"><canvas id="landingGapChart"></canvas></div>
+      </div>
+      <div class="card card-pad">
+        <div class="section-card-title">Overall placement snapshot</div>
+        <div class="section-card-sub">Current academic cycle, all departments</div>
+        <div style="height:260px;position:relative;"><canvas id="landingPlacementChart"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="stories" style="padding-top:0;">
+    <div class="section-head">
+      <div class="section-tag">Success stories</div>
+      <h2 class="section-title">Outcomes people actually got</h2>
+    </div>
+    <div class="story-grid" id="storyGrid"></div>
+  </section>
+
+  <div class="cta-band">
+    <div class="cta-inner">
+      <div>
+        <h3>Ready to bring your campus onto SkillBridge?</h3>
+        <p>Set up your college workspace in minutes and start mapping skill readiness across every department.</p>
+      </div>
+      <div style="display:flex;gap:10px;flex-shrink:0;">
+        <button class="btn btn-outline" style="background:transparent;color:#fff;border-color:rgba(255,255,255,.3);" onclick="goLogin('college')">College login</button>
+        <button class="btn btn-primary" style="background:#fff;color:var(--indigo-700);" onclick="goLogin('student')">Get started</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="brand" style="margin-bottom:12px;">
+          <svg class="brand-mark" viewBox="0 0 40 40"><path d="M4 26 C4 14, 14 8, 20 8 C26 8, 36 14, 36 26" stroke="#4F46E5" stroke-width="3.4" fill="none" stroke-linecap="round"/><circle cx="4" cy="26" r="3.4" fill="#0EA5E9"/><circle cx="36" cy="26" r="3.4" fill="#0EA5E9"/><circle cx="20" cy="8" r="3" fill="#4F46E5"/></svg>
+          SkillBridge
+        </div>
+        <p style="font-size:13px;color:var(--slate-500);max-width:260px;line-height:1.6;">A centralized academia–industry collaboration platform for skill mapping, internships and placements. SIH prototype build.</p>
+      </div>
+      <div><h5>Platform</h5><ul><li>Skill mapping</li><li>Internship matching</li><li>Placement analytics</li><li>Mentor network</li></ul></div>
+      <div><h5>For</h5><ul><li>Students</li><li>Colleges &amp; TPOs</li><li>Industry partners</li><li>Mentors</li></ul></div>
+      <div><h5>Company</h5><ul><li>About the prototype</li><li>SIH problem statement</li><li>Contact team</li></ul></div>
+    </div>
+    <div class="footer-bottom">© 2026 SkillBridge — Smart India Hackathon prototype. All data shown is simulated demo data.</div>
+  </footer>
+</div>
+
+<!-- ============================================================= LOGIN ============================================================= -->
+<div id="page-login" class="page">
+  <div class="login-wrap">
+    <div class="login-side">
+      <a class="back-home" style="color:#C7CAF3;" href="#" onclick="goLanding();return false;">← Back to home</a>
+      <div>
+        <div class="brand" style="color:#fff;" onclick="goLanding()">
+          <svg class="brand-mark" viewBox="0 0 40 40"><path d="M4 26 C4 14, 14 8, 20 8 C26 8, 36 14, 36 26" stroke="#fff" stroke-width="3.4" fill="none" stroke-linecap="round"/><circle cx="4" cy="26" r="3.4" fill="#0EA5E9"/><circle cx="36" cy="26" r="3.4" fill="#0EA5E9"/><circle cx="20" cy="8" r="3" fill="#fff"/></svg>
+          SkillBridge
+        </div>
+        <h2 id="loginSideTitle">Skills, mapped. Careers, matched.</h2>
+        <p id="loginSideDesc">Sign in to view your live skill profile, matched internships, and placement journey.</p>
+        <div class="stat-chip"><span style="font-size:20px;">👥</span><div><div style="font-weight:700;font-size:15px;">10,000+</div><div style="font-size:12px;color:#A5A9E8;">Students onboarded</div></div></div>
+        <div class="stat-chip"><span style="font-size:20px;">🏢</span><div><div style="font-weight:700;font-size:15px;">250+</div><div style="font-size:12px;color:#A5A9E8;">Companies hiring</div></div></div>
+      </div>
+      <p style="font-size:12px;color:#8B90D6;">Dummy authentication — enter anything to explore the prototype.</p>
+    </div>
+    <div class="login-form-wrap">
+      <div class="login-box">
+        <div style="margin-bottom:16px;"><a class="back-home" href="#" onclick="goLanding();return false;">← Back to home</a></div>
+        <h2 style="font-size:24px;margin-bottom:6px;">Welcome back</h2>
+        <p style="font-size:14px;color:var(--slate-500);margin-bottom:24px;">Choose your role to continue</p>
+        <div class="role-tabs" id="roleTabs"></div>
+        <div class="field"><label>Email address</label><input type="email" id="loginEmail" placeholder="you@example.com"></div>
+        <div class="field"><label>Password</label><input type="password" id="loginPassword" placeholder="••••••••"></div>
+        <div class="login-meta">
+          <label style="display:flex;align-items:center;gap:7px;color:var(--slate-500);cursor:pointer;"><input type="checkbox" checked style="width:auto;"> Remember me</label>
+          <a href="#" onclick="alert('Password reset link sent to demo email!');return false;" style="color:var(--indigo-600);font-weight:600;">Forgot password?</a>
+        </div>
+        <button class="btn btn-primary btn-block" onclick="submitLogin()">Sign in as <span id="loginRoleLabel">Student</span> →</button>
+        <div class="login-demo-note">🔒 <strong>Hackathon Prototype Mode:</strong> Any email/password will instantly sign you in with full realistic demo data for the selected role.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================= DASHBOARD SHELL ============================================================= -->
+<div id="page-dashboard" class="page">
+  <div class="dash">
+    <aside class="sidebar" id="sidebar"></aside>
+    <main class="dmain" id="dmain"></main>
+  </div>
+</div>
+
+<!-- ============================================================= MODAL CONTAINER ============================================================= -->
+<div id="modalOverlay" class="modal-overlay">
+  <div class="modal-box" id="modalBox">
+    <!-- Populated by JS -->
+  </div>
+</div>
+
+<!-- ============================================================= TOAST CONTAINER ============================================================= -->
+<div id="toastContainer" class="toast-container"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
