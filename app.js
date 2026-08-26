@@ -1,5 +1,5 @@
 /**
- * SkillBridge | Academia-Industry Collaboration Platform
+ * SkillPeek | Academia-Industry Collaboration Platform
  * Smart India Hackathon Prototype (SIH 2026)
  * Single Page Application & Reactive State Engine
  */
@@ -19,7 +19,8 @@ const STATE = {
       roleTitle: 'B.Tech CSE · Semester 6',
       college: 'NIT Surathkal',
       cgpa: 8.85,
-      avatarBg: '#4F46E5',
+      avatarBg: '#FBBF24',
+      avatarColor: '#111315',
       initials: 'PS',
       profileCompletion: 88,
       targetRole: 'Full Stack & AI Engineer'
@@ -28,7 +29,8 @@ const STATE = {
       name: 'Dr. Rajesh Rao',
       roleTitle: 'Head of Placements (TPO)',
       college: 'National Institute of Technology Karnataka',
-      avatarBg: '#0EA5E9',
+      avatarBg: '#24282C',
+      avatarColor: '#FBBF24',
       initials: 'RR',
       dept: 'Placement & Industry Relations Cell'
     },
@@ -37,6 +39,7 @@ const STATE = {
       roleTitle: 'University Talent Lead',
       company: 'Google India & APAC',
       avatarBg: '#10B981',
+      avatarColor: '#111315',
       initials: 'NS',
       dept: 'Engineering Recruitment'
     },
@@ -44,7 +47,8 @@ const STATE = {
       name: 'Anand Verma',
       roleTitle: 'Principal Cloud Architect',
       company: 'Microsoft (Ex-Amazon)',
-      avatarBg: '#8B5CF6',
+      avatarBg: '#F59E0B',
+      avatarColor: '#111315',
       initials: 'AV',
       rating: 4.95,
       totalMentees: 42
@@ -200,7 +204,7 @@ const STATE = {
       appliedOn: '20 Aug 2026',
       currentStep: 2,
       statusText: 'Skill Assessment Review',
-      statusType: 'pill-indigo',
+      statusType: 'pill-gold',
       interviewDate: 'Pending Review',
       notes: 'Assignment submitted: React high-concurrency order tracker.'
     },
@@ -223,7 +227,8 @@ const STATE = {
       id: 'm-1',
       name: 'Anand Verma',
       company: 'Principal Cloud Architect @ Microsoft',
-      avatarBg: '#8B5CF6',
+      avatarBg: '#F59E0B',
+      avatarColor: '#111315',
       initials: 'AV',
       domain: 'System Design & Cloud',
       rating: 4.95,
@@ -236,6 +241,7 @@ const STATE = {
       name: 'Dr. Shalini Mukhopadhyay',
       company: 'Research Scientist @ Google DeepMind',
       avatarBg: '#EC4899',
+      avatarColor: '#ffffff',
       initials: 'SM',
       domain: 'Machine Learning & LLMs',
       rating: 4.98,
@@ -248,6 +254,7 @@ const STATE = {
       name: 'Rohan Mehra',
       company: 'Engineering Manager @ CRED',
       avatarBg: '#10B981',
+      avatarColor: '#111315',
       initials: 'RM',
       domain: 'Frontend & System Architecture',
       rating: 4.90,
@@ -456,7 +463,7 @@ function initLandingPage() {
         <h4>${f.title}</h4>
         <p>${f.desc}</p>
         <ul>
-          ${f.bullets.map(b => `<li><span>✓</span> ${b}</li>`).join('')}
+          ${f.bullets.map(b => `<li><span style="color:var(--primary-gold);">✓</span> ${b}</li>`).join('')}
         </ul>
       </div>
     `).join('');
@@ -467,25 +474,28 @@ function initLandingPage() {
   if (storyGrid) {
     const stories = [
       {
-        quote: "“SkillBridge eliminated 80% of our recruitment screening time. Instead of reading 1,000 PDFs, we filtered candidates by verified PyTorch scores and hired 6 stellar engineers.”",
+        quote: "“SkillPeek eliminated 80% of our recruitment screening time. Instead of reading 1,000 PDFs, we filtered candidates by verified PyTorch scores and hired 6 stellar engineers.”",
         name: "Neha Sen",
         role: "University Talent Lead, Google India",
         avatar: "NS",
-        bg: "#4285F4"
+        bg: "#FBBF24",
+        color: "#111315"
       },
       {
         quote: "“Our college saw a 42% jump in Tier-1 product company placements. The live skill gap heatmap showed our students were missing Docker and FastAPI, which we quickly patched.”",
         name: "Dr. Rajesh Rao",
         role: "TPO Head, NIT Surathkal",
         avatar: "RR",
-        bg: "#0EA5E9"
+        bg: "#24282C",
+        color: "#FBBF24"
       },
       {
         quote: "“I bridged my gap in Distributed Systems in 3 weeks through the recommended learning pathway, took the verified quiz, and landed my dream internship at Microsoft!”",
         name: "Priya Sharma",
         role: "B.Tech CSE, Placed at Microsoft",
         avatar: "PS",
-        bg: "#10B981"
+        bg: "#10B981",
+        color: "#111315"
       }
     ];
 
@@ -493,7 +503,7 @@ function initLandingPage() {
       <div class="story-card">
         <div class="story-quote">${s.quote}</div>
         <div class="story-person">
-          <div class="avatar" style="background:${s.bg};">${s.avatar}</div>
+          <div class="avatar" style="background:${s.bg};color:${s.color || '#111315'};">${s.avatar}</div>
           <div>
             <div class="story-name">${s.name}</div>
             <div class="story-role">${s.role}</div>
@@ -539,7 +549,7 @@ function renderLandingCharts() {
           {
             label: 'Industry Hiring Demand (%)',
             data: [94, 88, 92, 85, 82, 90],
-            backgroundColor: '#1E1B4B',
+            backgroundColor: '#FBBF24',
             borderRadius: 6
           },
           {
@@ -554,7 +564,7 @@ function renderLandingCharts() {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { position: 'top', labels: { font: { family: 'Inter', size: 12 } } },
+          legend: { position: 'top', labels: { color: '#CBD5E1', font: { family: 'Inter', size: 12 } } },
           tooltip: {
             callbacks: {
               afterBody: function(context) {
@@ -568,8 +578,16 @@ function renderLandingCharts() {
           }
         },
         scales: {
-          y: { min: 0, max: 100, ticks: { callback: v => v + '%' } },
-          x: { grid: { display: false } }
+          y: { 
+            min: 0, 
+            max: 100, 
+            ticks: { color: '#94A3B8', callback: v => v + '%' },
+            grid: { color: 'rgba(255,255,255,0.06)' }
+          },
+          x: { 
+            ticks: { color: '#94A3B8' },
+            grid: { display: false } 
+          }
         }
       }
     });
@@ -587,16 +605,16 @@ function renderLandingCharts() {
         labels: ['Tier-1 Tech Offers', 'Paid Internships Active', 'Ongoing Final Rounds', 'Higher Ed / R&D'],
         datasets: [{
           data: [42, 34, 16, 8],
-          backgroundColor: ['#4F46E5', '#0EA5E9', '#F59E0B', '#10B981'],
+          backgroundColor: ['#FBBF24', '#F59E0B', '#0EA5E9', '#10B981'],
           borderWidth: 2,
-          borderColor: '#ffffff'
+          borderColor: '#1B1E21'
         }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { position: 'right', labels: { font: { family: 'Inter', size: 12 }, boxWidth: 14 } }
+          legend: { position: 'right', labels: { color: '#CBD5E1', font: { family: 'Inter', size: 12 }, boxWidth: 14 } }
         },
         cutout: '68%'
       }
@@ -752,12 +770,12 @@ function renderSidebar(role, activeTab) {
 
   sb.innerHTML = `
     <div class="sb-brand" onclick="goLanding()">
-      <svg class="brand-mark" viewBox="0 0 40 40"><path d="M4 26 C4 14, 14 8, 20 8 C26 8, 36 14, 36 26" stroke="#4F46E5" stroke-width="3.4" fill="none" stroke-linecap="round"/><circle cx="4" cy="26" r="3.4" fill="#0EA5E9"/><circle cx="36" cy="26" r="3.4" fill="#0EA5E9"/><circle cx="20" cy="8" r="3" fill="#4F46E5"/></svg>
-      <span>SkillBridge</span>
+      <svg class="brand-mark" viewBox="0 0 40 40"><path d="M4 26 C4 14, 14 8, 20 8 C26 8, 36 14, 36 26" stroke="#FBBF24" stroke-width="3.4" fill="none" stroke-linecap="round"/><circle cx="4" cy="26" r="3.4" fill="#F59E0B"/><circle cx="36" cy="26" r="3.4" fill="#F59E0B"/><circle cx="20" cy="8" r="3" fill="#FBBF24"/></svg>
+      <span>SkillPeek</span>
     </div>
 
     <div class="sb-role">
-      <div class="avatar" style="background:${profile.avatarBg};">${profile.initials}</div>
+      <div class="avatar" style="background:${profile.avatarBg};color:${profile.avatarColor || '#111315'};">${profile.initials}</div>
       <div style="overflow:hidden;">
         <div class="rn" style="white-space:nowrap;text-overflow:ellipsis;overflow:hidden;">${profile.name}</div>
         <div class="rr">${profile.roleTitle || profile.dept || 'Workspace User'}</div>
@@ -774,7 +792,7 @@ function renderSidebar(role, activeTab) {
     </div>
 
     <div class="sb-logout">
-      <div class="sb-link" onclick="logout()" style="color:#FCA5A5;">
+      <div class="sb-link" onclick="logout()" style="color:#FB7185;">
         <span class="ic">🚪</span>
         <span>Sign out</span>
       </div>
@@ -841,7 +859,7 @@ function renderStudentDashboard(container, tab) {
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
             <div>
               <div class="section-card-title">Live Skill Radar &amp; Target Match</div>
-              <div class="section-card-sub">Your proficiency (blue) vs. Google / Microsoft Target Benchmarks (indigo)</div>
+              <div class="section-card-sub">Your proficiency (gold) vs. Google / Microsoft Target Benchmarks (slate)</div>
             </div>
             <span class="pill pill-emerald">94% Fit with AI Roles</span>
           </div>
@@ -880,9 +898,9 @@ function renderStudentDashboard(container, tab) {
               </div>
             </div>
 
-            <div style="background:var(--indigo-50);padding:14px;border-radius:12px;border:1px solid var(--indigo-100);">
-              <div style="font-size:13.5px;font-weight:600;color:var(--indigo-900);">Next Action: Technical Architecture Interview</div>
-              <div style="font-size:12.5px;color:var(--indigo-700);margin-top:3px;">Scheduled for tomorrow at 3:30 PM IST with Google AI Team.</div>
+            <div style="background:var(--gold-subtle);padding:14px;border-radius:12px;border:1px solid var(--gold-border);">
+              <div style="font-size:13.5px;font-weight:700;color:var(--primary-gold);">Next Action: Technical Architecture Interview</div>
+              <div style="font-size:12.5px;color:var(--text-secondary);margin-top:3px;">Scheduled for tomorrow at 3:30 PM IST with Google AI Team.</div>
             </div>
           </div>
 
@@ -929,19 +947,19 @@ function renderStudentDashboard(container, tab) {
           
           <div style="margin-top:16px;display:flex;flex-direction:column;gap:16px;">
             ${STATE.skills.map(sk => `
-              <div style="padding:14px;border:1px solid var(--slate-200);border-radius:12px;display:flex;justify-content:space-between;align-items:center;background:#fff;">
+              <div style="padding:14px;border:1px solid var(--border-main);border-radius:12px;display:flex;justify-content:space-between;align-items:center;background:var(--bg-secondary);">
                 <div style="flex:1;margin-right:20px;">
                   <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
-                    <span style="font-weight:600;font-size:14px;">${sk.name}</span>
-                    <span class="mono" style="font-weight:700;color:var(--indigo-600);">${sk.level}%</span>
+                    <span style="font-weight:600;font-size:14px;color:var(--text-primary);">${sk.name}</span>
+                    <span class="mono" style="font-weight:700;color:var(--primary-gold);">${sk.level}%</span>
                   </div>
                   <div class="progress-track">
-                    <div class="progress-fill" style="width:${sk.level}%;background:${sk.level >= 85 ? 'var(--emerald-500)' : sk.level >= 75 ? 'var(--indigo-500)' : 'var(--amber-500)'}"></div>
+                    <div class="progress-fill" style="width:${sk.level}%;background:${sk.level >= 85 ? 'var(--emerald-500)' : sk.level >= 75 ? 'var(--primary-gold)' : 'var(--primary-amber)'}"></div>
                   </div>
-                  <div style="display:flex;gap:8px;margin-top:6px;font-size:11.5px;color:var(--slate-400);">
+                  <div style="display:flex;gap:8px;margin-top:6px;font-size:11.5px;color:var(--text-muted);">
                     <span>Category: ${sk.category}</span>
                     <span>•</span>
-                    <span>${sk.verified ? '✅ Cryptographically Verified' : '⏳ Self-reported'}</span>
+                    <span style="color:${sk.verified ? 'var(--emerald-text)' : 'var(--text-dim)'};">${sk.verified ? '✅ Cryptographically Verified' : '⏳ Self-reported'}</span>
                   </div>
                 </div>
                 <div>
@@ -955,28 +973,28 @@ function renderStudentDashboard(container, tab) {
         <div style="display:flex;flex-direction:column;gap:18px;">
           <div class="ai-card">
             <div class="tagline">🤖 AI Skill Coach Advice</div>
-            <h3 style="margin-top:10px;font-size:19px;color:#fff;">Unlock Tier-1 SRE &amp; Distributed Systems Roles</h3>
-            <p style="margin-top:8px;font-size:13.5px;color:#C7CAF3;line-height:1.55;">
+            <h3 style="margin-top:10px;font-size:19px;color:var(--text-primary);">Unlock Tier-1 SRE &amp; Distributed Systems Roles</h3>
+            <p style="margin-top:8px;font-size:13.5px;color:var(--text-secondary);line-height:1.55;">
               Your <strong>System Design (68%)</strong> is the only metric keeping you from a 98% match with Google &amp; Razorpay infrastructure teams. Pass the 3-question assessment to gain +10% verified credit.
             </p>
-            <button class="btn btn-primary btn-sm" style="background:#fff;color:var(--indigo-900);margin-top:16px;" onclick="openAssessmentModal('System Design & Distributed Systems')">Start System Design Quiz (2 mins) →</button>
+            <button class="btn btn-primary btn-sm" style="margin-top:16px;" onclick="openAssessmentModal('System Design & Distributed Systems')">Start System Design Quiz (2 mins) →</button>
           </div>
 
           <div class="card card-pad">
             <div class="section-card-title">Verified Certifications &amp; Hackathons</div>
             <div class="section-card-sub">Synced from GitHub, LeetCode, HackerRank &amp; Coursera</div>
             <ul style="display:flex;flex-direction:column;gap:10px;margin-top:12px;">
-              <li style="padding:10px 12px;background:var(--slate-50);border-radius:10px;font-size:13px;display:flex;justify-content:space-between;align-items:center;">
-                <span>🏆 Smart India Hackathon 2025 Finalist</span>
+              <li style="padding:10px 12px;background:var(--bg-slate);border:1px solid var(--border-subtle);border-radius:10px;font-size:13px;display:flex;justify-content:space-between;align-items:center;">
+                <span style="color:var(--text-primary);">🏆 Smart India Hackathon 2025 Finalist</span>
                 <span class="pill pill-emerald">+15% System Design</span>
               </li>
-              <li style="padding:10px 12px;background:var(--slate-50);border-radius:10px;font-size:13px;display:flex;justify-content:space-between;align-items:center;">
-                <span>📜 AWS Certified Cloud Practitioner</span>
+              <li style="padding:10px 12px;background:var(--bg-slate);border:1px solid var(--border-subtle);border-radius:10px;font-size:13px;display:flex;justify-content:space-between;align-items:center;">
+                <span style="color:var(--text-primary);">📜 AWS Certified Cloud Practitioner</span>
                 <span class="pill pill-sky">Verified on chain</span>
               </li>
-              <li style="padding:10px 12px;background:var(--slate-50);border-radius:10px;font-size:13px;display:flex;justify-content:space-between;align-items:center;">
-                <span>⚡ LeetCode Top 4% (Rating 2140)</span>
-                <span class="pill pill-indigo">Auto-synced</span>
+              <li style="padding:10px 12px;background:var(--bg-slate);border:1px solid var(--border-subtle);border-radius:10px;font-size:13px;display:flex;justify-content:space-between;align-items:center;">
+                <span style="color:var(--text-primary);">⚡ LeetCode Top 4% (Rating 2140)</span>
+                <span class="pill pill-gold">Auto-synced</span>
               </li>
             </ul>
           </div>
@@ -1039,32 +1057,32 @@ function renderStudentDashboard(container, tab) {
           <div class="section-card-sub">Target Companies: Google, Microsoft, Uber, Razorpay</div>
 
           <div style="margin-top:20px;display:flex;flex-direction:column;gap:18px;">
-            <div style="padding:16px;border-left:4px solid var(--emerald-500);background:var(--slate-50);border-radius:0 12px 12px 0;">
+            <div style="padding:16px;border-left:4px solid var(--emerald-500);background:var(--bg-slate);border-radius:0 12px 12px 0;">
               <div style="display:flex;justify-content:space-between;">
                 <span class="pill pill-emerald">Phase 1: Completed</span>
-                <span style="font-size:12px;color:var(--slate-400);">Aug 2026</span>
+                <span style="font-size:12px;color:var(--text-dim);">Aug 2026</span>
               </div>
-              <h4 style="margin-top:8px;">Deep PyTorch &amp; FastAPI Production Microservices</h4>
-              <p style="font-size:13px;color:var(--slate-500);margin-top:4px;">Built and benchmarked async RAG pipeline. Verified with HackerRank test.</p>
+              <h4 style="margin-top:8px;color:var(--text-primary);">Deep PyTorch &amp; FastAPI Production Microservices</h4>
+              <p style="font-size:13px;color:var(--text-secondary);margin-top:4px;">Built and benchmarked async RAG pipeline. Verified with HackerRank test.</p>
             </div>
 
-            <div style="padding:16px;border-left:4px solid var(--sky-500);background:var(--sky-100);border-radius:0 12px 12px 0;">
+            <div style="padding:16px;border-left:4px solid var(--primary-gold);background:var(--gold-subtle);border-radius:0 12px 12px 0;border:1px solid var(--gold-border);border-left:4px solid var(--primary-gold);">
               <div style="display:flex;justify-content:space-between;">
-                <span class="pill pill-sky">Phase 2: In Progress</span>
-                <span style="font-size:12px;color:var(--indigo-700);font-weight:600;">+8% Match Gain</span>
+                <span class="pill pill-gold">Phase 2: In Progress</span>
+                <span style="font-size:12px;color:var(--primary-gold);font-weight:600;">+8% Match Gain</span>
               </div>
-              <h4 style="margin-top:8px;">Distributed Caching &amp; Consistent Hashing Capstone</h4>
-              <p style="font-size:13px;color:var(--slate-700);margin-top:4px;">Build a multi-replica key-value store in Go/Python to demonstrate Partition Tolerance handling.</p>
+              <h4 style="margin-top:8px;color:var(--text-primary);">Distributed Caching &amp; Consistent Hashing Capstone</h4>
+              <p style="font-size:13px;color:var(--text-secondary);margin-top:4px;">Build a multi-replica key-value store in Go/Python to demonstrate Partition Tolerance handling.</p>
               <button class="btn btn-primary btn-sm" style="margin-top:12px;" onclick="openAssessmentModal('System Design & Distributed Systems')">Take System Design Assessment →</button>
             </div>
 
-            <div style="padding:16px;border-left:4px solid var(--slate-300);background:var(--slate-50);border-radius:0 12px 12px 0;">
+            <div style="padding:16px;border-left:4px solid var(--border-light);background:var(--bg-slate);border-radius:0 12px 12px 0;">
               <div style="display:flex;justify-content:space-between;">
                 <span class="pill pill-slate">Phase 3: Upcoming</span>
-                <span style="font-size:12px;color:var(--slate-400);">Sep 2026</span>
+                <span style="font-size:12px;color:var(--text-dim);">Sep 2026</span>
               </div>
-              <h4 style="margin-top:8px;">Kubernetes Multi-Cluster Helm Deployment</h4>
-              <p style="font-size:13px;color:var(--slate-500);margin-top:4px;">Deploy containerized microservices with auto-scaling triggers on AWS EKS / GCP GKE.</p>
+              <h4 style="margin-top:8px;color:var(--text-primary);">Kubernetes Multi-Cluster Helm Deployment</h4>
+              <p style="font-size:13px;color:var(--text-secondary);margin-top:4px;">Deploy containerized microservices with auto-scaling triggers on AWS EKS / GCP GKE.</p>
             </div>
           </div>
         </div>
@@ -1075,18 +1093,18 @@ function renderStudentDashboard(container, tab) {
             <div class="section-card-sub">Co-designed with Microsoft and AWS engineers</div>
             
             <div style="display:flex;flex-direction:column;gap:12px;margin-top:14px;">
-              <div style="padding:12px;border:1px solid var(--slate-200);border-radius:10px;display:flex;justify-content:space-between;align-items:center;">
+              <div style="padding:12px;border:1px solid var(--border-main);background:var(--bg-secondary);border-radius:10px;display:flex;justify-content:space-between;align-items:center;">
                 <div>
-                  <div style="font-weight:600;font-size:13.5px;">Advanced Distributed Systems 301</div>
-                  <div style="font-size:12px;color:var(--slate-400);">6 modules · 4 hours · by Microsoft Azure Team</div>
+                  <div style="font-weight:600;font-size:13.5px;color:var(--text-primary);">Advanced Distributed Systems 301</div>
+                  <div style="font-size:12px;color:var(--text-muted);">6 modules · 4 hours · by Microsoft Azure Team</div>
                 </div>
                 <button class="btn btn-outline btn-xs" onclick="showToast('Enrolled in Advanced Distributed Systems 301!', 'success')">Enroll Free</button>
               </div>
 
-              <div style="padding:12px;border:1px solid var(--slate-200);border-radius:10px;display:flex;justify-content:space-between;align-items:center;">
+              <div style="padding:12px;border:1px solid var(--border-main);background:var(--bg-secondary);border-radius:10px;display:flex;justify-content:space-between;align-items:center;">
                 <div>
-                  <div style="font-weight:600;font-size:13.5px;">Production PyTorch &amp; TensorRT Optimization</div>
-                  <div style="font-size:12px;color:var(--slate-400);">4 modules · 3 hours · by Nvidia AI Institute</div>
+                  <div style="font-weight:600;font-size:13.5px;color:var(--text-primary);">Production PyTorch &amp; TensorRT Optimization</div>
+                  <div style="font-size:12px;color:var(--text-muted);">4 modules · 3 hours · by Nvidia AI Institute</div>
                 </div>
                 <button class="btn btn-outline btn-xs" onclick="showToast('Enrolled in PyTorch TensorRT module!', 'success')">Enroll Free</button>
               </div>
@@ -1095,11 +1113,11 @@ function renderStudentDashboard(container, tab) {
 
           <div class="ai-card">
             <div class="tagline">💡 1-on-1 Mentor Recommendation</div>
-            <h4 style="margin-top:8px;color:#fff;">Schedule a 30-min Mock Tech Review</h4>
-            <p style="margin-top:6px;font-size:13px;color:#C7CAF3;">
+            <h4 style="margin-top:8px;color:var(--text-primary);">Schedule a 30-min Mock Tech Review</h4>
+            <p style="margin-top:6px;font-size:13px;color:var(--text-secondary);">
               Get your Distributed Systems portfolio audited directly by Anand Verma (Principal Cloud Architect @ Microsoft).
             </p>
-            <button class="btn btn-primary btn-sm" style="background:#fff;color:var(--indigo-900);margin-top:12px;" onclick="openBookMentorModal('m-1')">Book Session with Anand →</button>
+            <button class="btn btn-primary btn-sm" style="margin-top:12px;" onclick="openBookMentorModal('m-1')">Book Session with Anand →</button>
           </div>
         </div>
       </div>
@@ -1120,23 +1138,23 @@ function renderStudentDashboard(container, tab) {
           <div class="card card-pad" style="display:flex;flex-direction:column;justify-content:space-between;">
             <div>
               <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
-                <div class="avatar" style="background:${m.avatarBg};width:46px;height:46px;font-size:16px;">${m.initials}</div>
+                <div class="avatar" style="background:${m.avatarBg};color:${m.avatarColor || '#111315'};width:46px;height:46px;font-size:16px;">${m.initials}</div>
                 <div>
-                  <div style="font-weight:700;font-size:15.5px;">${m.name}</div>
-                  <div style="font-size:12.5px;color:var(--slate-500);">${m.company}</div>
+                  <div style="font-weight:700;font-size:15.5px;color:var(--text-primary);">${m.name}</div>
+                  <div style="font-size:12.5px;color:var(--text-muted);">${m.company}</div>
                 </div>
               </div>
 
               <div style="display:flex;gap:8px;margin-bottom:12px;">
-                <span class="pill pill-amber">★ ${m.rating} (${m.reviews} reviews)</span>
+                <span class="pill pill-gold">★ ${m.rating} (${m.reviews} reviews)</span>
                 <span class="pill pill-sky">${m.domain}</span>
               </div>
 
-              <p style="font-size:13.5px;color:var(--slate-600);line-height:1.55;">${m.bio}</p>
+              <p style="font-size:13.5px;color:var(--text-secondary);line-height:1.55;">${m.bio}</p>
             </div>
 
-            <div style="margin-top:18px;border-top:1px solid var(--slate-100);padding-top:14px;">
-              <div style="font-size:12px;color:var(--emerald-500);font-weight:600;margin-bottom:10px;">🟢 ${m.availableSlots}</div>
+            <div style="margin-top:18px;border-top:1px solid var(--border-subtle);padding-top:14px;">
+              <div style="font-size:12px;color:var(--emerald-text);font-weight:600;margin-bottom:10px;">🟢 ${m.availableSlots}</div>
               <button class="btn btn-primary btn-block btn-sm" onclick="openBookMentorModal('${m.id}')">Book 1:1 Mentorship Session</button>
             </div>
           </div>
@@ -1174,13 +1192,13 @@ function renderStudentDashboard(container, tab) {
               ${STATE.applications.map(app => `
                 <tr>
                   <td>
-                    <div style="font-weight:600;color:var(--slate-900);">${app.company}</div>
-                    <div style="font-size:12px;color:var(--slate-500);">${app.jobTitle}</div>
+                    <div style="font-weight:600;color:var(--text-primary);">${app.company}</div>
+                    <div style="font-size:12px;color:var(--text-muted);">${app.jobTitle}</div>
                   </td>
                   <td>${app.appliedOn}</td>
                   <td><span class="pill ${app.statusType}">${app.statusText}</span></td>
-                  <td style="font-weight:600;color:var(--indigo-600);">${app.interviewDate}</td>
-                  <td style="max-width:240px;font-size:12.5px;color:var(--slate-600);">${app.notes}</td>
+                  <td style="font-weight:600;color:var(--primary-gold);">${app.interviewDate}</td>
+                  <td style="max-width:240px;font-size:12.5px;color:var(--text-secondary);">${app.notes}</td>
                   <td>
                     <button class="btn btn-outline btn-xs" onclick="alert('Viewing application details for ${app.company} - ${app.jobTitle}')">View Details</button>
                   </td>
@@ -1214,19 +1232,20 @@ function renderStudentRadarChart() {
         {
           label: 'Priya Sharma (Live)',
           data: myScores,
-          backgroundColor: 'rgba(14, 165, 233, 0.25)',
-          borderColor: '#0EA5E9',
+          backgroundColor: 'rgba(251, 191, 36, 0.25)',
+          borderColor: '#FBBF24',
           borderWidth: 2,
-          pointBackgroundColor: '#0EA5E9'
+          pointBackgroundColor: '#FBBF24',
+          pointBorderColor: '#111315'
         },
         {
           label: 'Google/Microsoft Target Cutoff',
           data: benchmarkScores,
-          backgroundColor: 'rgba(79, 70, 229, 0.12)',
-          borderColor: '#4F46E5',
+          backgroundColor: 'rgba(148, 163, 184, 0.10)',
+          borderColor: '#94A3B8',
           borderWidth: 2,
           borderDash: [4, 4],
-          pointBackgroundColor: '#4F46E5'
+          pointBackgroundColor: '#94A3B8'
         }
       ]
     },
@@ -1238,11 +1257,13 @@ function renderStudentRadarChart() {
           min: 40,
           max: 100,
           ticks: { stepSize: 20, display: false },
-          pointLabels: { font: { family: 'Inter', size: 11, weight: '600' } }
+          grid: { color: 'rgba(255,255,255,0.08)' },
+          angleLines: { color: 'rgba(255,255,255,0.08)' },
+          pointLabels: { color: '#CBD5E1', font: { family: 'Inter', size: 11, weight: '600' } }
         }
       },
       plugins: {
-        legend: { position: 'bottom', labels: { font: { family: 'Inter', size: 12 } } }
+        legend: { position: 'bottom', labels: { color: '#CBD5E1', font: { family: 'Inter', size: 12 } } }
       }
     }
   });
@@ -1333,7 +1354,7 @@ function renderCollegeDashboard(container, tab) {
             </thead>
             <tbody>
               <tr>
-                <td><strong>Priya Sharma</strong></td>
+                <td><strong style="color:var(--text-primary);">Priya Sharma</strong></td>
                 <td>B.Tech CSE (Sem 6)</td>
                 <td>8.85</td>
                 <td><span class="pill pill-emerald">94% Fit</span></td>
@@ -1342,7 +1363,7 @@ function renderCollegeDashboard(container, tab) {
                 <td><button class="btn btn-outline btn-xs" onclick="alert('Viewing Priya Sharma profile');">View Dossier</button></td>
               </tr>
               <tr>
-                <td><strong>Rahul Nair</strong></td>
+                <td><strong style="color:var(--text-primary);">Rahul Nair</strong></td>
                 <td>B.Tech ECE (Sem 6)</td>
                 <td>8.70</td>
                 <td><span class="pill pill-emerald">91% Fit</span></td>
@@ -1351,10 +1372,10 @@ function renderCollegeDashboard(container, tab) {
                 <td><button class="btn btn-outline btn-xs" onclick="alert('Viewing Rahul Nair profile');">View Dossier</button></td>
               </tr>
               <tr>
-                <td><strong>Ananya Deshmukh</strong></td>
+                <td><strong style="color:var(--text-primary);">Ananya Deshmukh</strong></td>
                 <td>B.Tech IT (Sem 6)</td>
                 <td>9.12</td>
-                <td><span class="pill pill-indigo">88% Fit</span></td>
+                <td><span class="pill pill-gold">88% Fit</span></td>
                 <td>AWS, Docker, Node.js, Go</td>
                 <td><span class="pill pill-sky">Swiggy Screening</span></td>
                 <td><button class="btn btn-outline btn-xs" onclick="alert('Viewing Ananya Deshmukh profile');">View Dossier</button></td>
@@ -1383,29 +1404,29 @@ function renderCollegeDashboard(container, tab) {
           <div class="section-card-sub">Calculated across 850+ active recruiter job descriptions</div>
           
           <div style="margin-top:16px;display:flex;flex-direction:column;gap:14px;">
-            <div style="padding:14px;background:var(--rose-100);border-radius:12px;border:1px solid #FECDD3;">
+            <div style="padding:14px;background:var(--rose-bg);border-radius:12px;border:1px solid rgba(244,63,94,0.3);">
               <div style="display:flex;justify-content:space-between;align-items:center;">
-                <strong style="color:#9F1239;">1. Kubernetes &amp; Cloud Native Orchestration</strong>
+                <strong style="color:var(--rose-text);">1. Kubernetes &amp; Cloud Native Orchestration</strong>
                 <span class="pill pill-rose">Gap: 38% Deficit</span>
               </div>
-              <p style="font-size:13px;color:#881337;margin-top:4px;">Industry demands 82% proficiency; ECE &amp; IT cohort averages only 44%.</p>
-              <button class="btn btn-outline btn-xs" style="margin-top:10px;background:#fff;" onclick="showToast('Assigned AWS/K8s micro-module to Semester 6 curriculum!', 'success')">Deploy Bridge Module to Batch</button>
+              <p style="font-size:13px;color:var(--text-secondary);margin-top:4px;">Industry demands 82% proficiency; ECE &amp; IT cohort averages only 44%.</p>
+              <button class="btn btn-outline btn-xs" style="margin-top:10px;" onclick="showToast('Assigned AWS/K8s micro-module to Semester 6 curriculum!', 'success')">Deploy Bridge Module to Batch</button>
             </div>
 
-            <div style="padding:14px;background:var(--amber-100);border-radius:12px;border:1px solid #FDE68A;">
+            <div style="padding:14px;background:var(--amber-bg);border-radius:12px;border:1px solid rgba(245,158,11,0.3);">
               <div style="display:flex;justify-content:space-between;align-items:center;">
-                <strong style="color:#92400E;">2. Distributed Systems &amp; Concurrency (Go / Rust)</strong>
+                <strong style="color:var(--amber-text);">2. Distributed Systems &amp; Concurrency (Go / Rust)</strong>
                 <span class="pill pill-amber">Gap: 28% Deficit</span>
               </div>
-              <p style="font-size:13px;color:#78350F;margin-top:4px;">High demand by FinTech recruiters (CRED, Razorpay, Swiggy).</p>
+              <p style="font-size:13px;color:var(--text-secondary);margin-top:4px;">High demand by FinTech recruiters (CRED, Razorpay, Swiggy).</p>
             </div>
 
-            <div style="padding:14px;background:var(--indigo-50);border-radius:12px;border:1px solid var(--indigo-100);">
+            <div style="padding:14px;background:var(--gold-subtle);border-radius:12px;border:1px solid var(--gold-border);">
               <div style="display:flex;justify-content:space-between;align-items:center;">
-                <strong style="color:var(--indigo-900);">3. Generative AI &amp; LangChain / RAG Pipelines</strong>
-                <span class="pill pill-indigo">Gap: 21% Deficit</span>
+                <strong style="color:var(--primary-gold);">3. Generative AI &amp; LangChain / RAG Pipelines</strong>
+                <span class="pill pill-gold">Gap: 21% Deficit</span>
               </div>
-              <p style="font-size:13px;color:var(--indigo-700);margin-top:4px;">Strong interest from Google, Microsoft &amp; NVIDIA campus labs.</p>
+              <p style="font-size:13px;color:var(--text-secondary);margin-top:4px;">Strong interest from Google, Microsoft &amp; NVIDIA campus labs.</p>
             </div>
           </div>
         </div>
@@ -1413,13 +1434,13 @@ function renderCollegeDashboard(container, tab) {
         <div class="card card-pad">
           <div class="section-card-title">AI Remediation Action Plan</div>
           <div class="section-card-sub">Automatic curriculum synchronizer</div>
-          <p style="font-size:13.5px;color:var(--slate-600);line-height:1.6;">
-            SkillBridge automatically generates an elective syllabus patch vetted by corporate partners. You can approve this module to sync with student portals immediately.
+          <p style="font-size:13.5px;color:var(--text-secondary);line-height:1.6;">
+            SkillPeek automatically generates an elective syllabus patch vetted by corporate partners. You can approve this module to sync with student portals immediately.
           </p>
-          <div style="margin-top:18px;padding:14px;background:var(--slate-50);border-radius:10px;">
-            <div style="font-weight:600;font-size:13.5px;">Recommended Elective: "Production Cloud Engineering (CS604)"</div>
-            <div style="font-size:12px;color:var(--slate-500);margin-top:4px;">Vetted by: Amazon AWS Academy &amp; Microsoft Azure India</div>
-            <div style="margin-top:10px;font-size:12px;color:var(--emerald-500);font-weight:600;">✓ Increases cohort placement fit by +18.4%</div>
+          <div style="margin-top:18px;padding:14px;background:var(--bg-slate);border:1px solid var(--border-subtle);border-radius:10px;">
+            <div style="font-weight:600;font-size:13.5px;color:var(--text-primary);">Recommended Elective: "Production Cloud Engineering (CS604)"</div>
+            <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Vetted by: Amazon AWS Academy &amp; Microsoft Azure India</div>
+            <div style="margin-top:10px;font-size:12px;color:var(--emerald-text);font-weight:600;">✓ Increases cohort placement fit by +18.4%</div>
           </div>
           <button class="btn btn-primary btn-block btn-sm" style="margin-top:16px;" onclick="showToast('Elective CS604 submitted to Board of Studies for ratification!', 'success')">Submit Elective to Academic Council</button>
         </div>
@@ -1460,8 +1481,8 @@ function renderCollegeDashboard(container, tab) {
             </thead>
             <tbody>
               <tr>
-                <td class="mono">23CS108</td>
-                <td><strong>Priya Sharma</strong></td>
+                <td class="mono" style="color:var(--primary-gold);">23CS108</td>
+                <td><strong style="color:var(--text-primary);">Priya Sharma</strong></td>
                 <td>CSE</td>
                 <td>8.85</td>
                 <td><span class="pill pill-emerald">94%</span></td>
@@ -1470,8 +1491,8 @@ function renderCollegeDashboard(container, tab) {
                 <td><button class="btn btn-outline btn-xs" onclick="alert('Viewing dossier for Priya Sharma')">Dossier</button></td>
               </tr>
               <tr>
-                <td class="mono">23EC042</td>
-                <td><strong>Rahul Nair</strong></td>
+                <td class="mono" style="color:var(--primary-gold);">23EC042</td>
+                <td><strong style="color:var(--text-primary);">Rahul Nair</strong></td>
                 <td>ECE</td>
                 <td>8.70</td>
                 <td><span class="pill pill-emerald">91%</span></td>
@@ -1480,21 +1501,21 @@ function renderCollegeDashboard(container, tab) {
                 <td><button class="btn btn-outline btn-xs" onclick="alert('Viewing dossier for Rahul Nair')">Dossier</button></td>
               </tr>
               <tr>
-                <td class="mono">23IT021</td>
-                <td><strong>Ananya Deshmukh</strong></td>
+                <td class="mono" style="color:var(--primary-gold);">23IT021</td>
+                <td><strong style="color:var(--text-primary);">Ananya Deshmukh</strong></td>
                 <td>IT</td>
                 <td>9.12</td>
-                <td><span class="pill pill-indigo">88%</span></td>
+                <td><span class="pill pill-gold">88%</span></td>
                 <td>AWS, Docker, Node.js</td>
                 <td><span class="pill pill-sky">Swiggy Screening</span></td>
                 <td><button class="btn btn-outline btn-xs" onclick="alert('Viewing dossier for Ananya')">Dossier</button></td>
               </tr>
               <tr>
-                <td class="mono">23CS144</td>
-                <td><strong>Vikramaditya Sen</strong></td>
+                <td class="mono" style="color:var(--primary-gold);">23CS144</td>
+                <td><strong style="color:var(--text-primary);">Vikramaditya Sen</strong></td>
                 <td>CSE</td>
                 <td>8.45</td>
-                <td><span class="pill pill-indigo">86%</span></td>
+                <td><span class="pill pill-gold">86%</span></td>
                 <td>Java, SpringBoot, SQL</td>
                 <td><span class="pill pill-amber">Seeking</span></td>
                 <td><button class="btn btn-outline btn-xs" onclick="alert('Viewing dossier for Vikramaditya')">Dossier</button></td>
@@ -1521,11 +1542,11 @@ function renderCollegeDashboard(container, tab) {
       <div class="grid-3">
         <div class="card card-pad">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-            <div style="font-weight:700;font-size:16px;">Google India</div>
+            <div style="font-weight:700;font-size:16px;color:var(--text-primary);">Google India</div>
             <span class="pill pill-emerald">Active MoU</span>
           </div>
-          <div style="font-size:12.5px;color:var(--slate-500);margin-top:4px;">Renewed: Jan 2026 · Valid till 2028</div>
-          <div style="margin-top:14px;font-size:13.5px;">
+          <div style="font-size:12.5px;color:var(--text-muted);margin-top:4px;">Renewed: Jan 2026 · Valid till 2028</div>
+          <div style="margin-top:14px;font-size:13.5px;color:var(--text-secondary);">
             <div>🎯 Hiring Quota: 15 Interns / Year</div>
             <div style="margin-top:4px;">🏢 Lab Co-Sponsored: Deep Learning Cluster</div>
           </div>
@@ -1534,11 +1555,11 @@ function renderCollegeDashboard(container, tab) {
 
         <div class="card card-pad">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-            <div style="font-weight:700;font-size:16px;">Microsoft India</div>
+            <div style="font-weight:700;font-size:16px;color:var(--text-primary);">Microsoft India</div>
             <span class="pill pill-emerald">Active MoU</span>
           </div>
-          <div style="font-size:12.5px;color:var(--slate-500);margin-top:4px;">Renewed: Mar 2026 · Valid till 2029</div>
-          <div style="margin-top:14px;font-size:13.5px;">
+          <div style="font-size:12.5px;color:var(--text-muted);margin-top:4px;">Renewed: Mar 2026 · Valid till 2029</div>
+          <div style="margin-top:14px;font-size:13.5px;color:var(--text-secondary);">
             <div>🎯 Hiring Quota: 20 Interns / Year</div>
             <div style="margin-top:4px;">🏢 Lab Co-Sponsored: Cloud Architecture Lab</div>
           </div>
@@ -1547,11 +1568,11 @@ function renderCollegeDashboard(container, tab) {
 
         <div class="card card-pad">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-            <div style="font-weight:700;font-size:16px;">Ather Energy</div>
+            <div style="font-weight:700;font-size:16px;color:var(--text-primary);">Ather Energy</div>
             <span class="pill pill-sky">Drive Scheduled</span>
           </div>
-          <div style="font-size:12.5px;color:var(--slate-500);margin-top:4px;">Campus Drive on 12 Sep 2026</div>
-          <div style="margin-top:14px;font-size:13.5px;">
+          <div style="font-size:12.5px;color:var(--text-muted);margin-top:4px;">Campus Drive on 12 Sep 2026</div>
+          <div style="margin-top:14px;font-size:13.5px;color:var(--text-secondary);">
             <div>🎯 Hiring Target: 10 Embedded Engineers</div>
             <div style="margin-top:4px;">🏢 Dept: ECE &amp; Mechanical</div>
           </div>
@@ -1574,14 +1595,28 @@ function renderCollegeCharts() {
       data: {
         labels: ['CSE', 'IT', 'ECE', 'EEE', 'Mechanical'],
         datasets: [
-          { label: 'Avg Skill Score (%)', data: [88, 85, 78, 71, 65], backgroundColor: '#4F46E5', borderRadius: 6 },
-          { label: 'Placement %', data: [94, 91, 84, 76, 68], backgroundColor: '#0EA5E9', borderRadius: 6 }
+          { label: 'Avg Skill Score (%)', data: [88, 85, 78, 71, 65], backgroundColor: '#FBBF24', borderRadius: 6 },
+          { label: 'Placement %', data: [94, 91, 84, 76, 68], backgroundColor: '#F59E0B', borderRadius: 6 }
         ]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        scales: { y: { min: 0, max: 100, ticks: { callback: v => v + '%' } } }
+        plugins: {
+          legend: { labels: { color: '#CBD5E1', font: { family: 'Inter', size: 12 } } }
+        },
+        scales: { 
+          y: { 
+            min: 0, 
+            max: 100, 
+            ticks: { color: '#94A3B8', callback: v => v + '%' },
+            grid: { color: 'rgba(255,255,255,0.06)' }
+          },
+          x: {
+            ticks: { color: '#94A3B8' },
+            grid: { display: false }
+          }
+        }
       }
     });
   }
@@ -1596,14 +1631,17 @@ function renderCollegeCharts() {
         labels: ['Dream / Super Dream (>₹20L)', 'Tier-1 Product (₹12L-₹20L)', 'High Growth Startups (₹8L-₹12L)', 'Core Engineering'],
         datasets: [{
           data: [38, 35, 18, 9],
-          backgroundColor: ['#4F46E5', '#0EA5E9', '#10B981', '#F59E0B'],
+          backgroundColor: ['#FBBF24', '#F59E0B', '#10B981', '#0EA5E9'],
           borderWidth: 2,
-          borderColor: '#fff'
+          borderColor: '#1B1E21'
         }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'right', labels: { color: '#CBD5E1', font: { family: 'Inter', size: 12 }, boxWidth: 14 } }
+        },
         cutout: '65%'
       }
     });
@@ -1666,20 +1704,20 @@ function renderIndustryDashboard(container, tab) {
           <div class="section-card-sub">Pre-screened against coding benchmarks</div>
           
           <div style="display:flex;flex-direction:column;gap:12px;margin-top:14px;">
-            <div style="padding:12px;border:1px solid var(--slate-200);border-radius:10px;display:flex;justify-content:space-between;align-items:center;">
+            <div style="padding:12px;border:1px solid var(--border-main);background:var(--bg-secondary);border-radius:10px;display:flex;justify-content:space-between;align-items:center;">
               <div>
-                <div style="font-weight:600;font-size:14px;">Priya Sharma <span class="pill pill-emerald">94% Match</span></div>
-                <div style="font-size:12px;color:var(--slate-500);">NIT Surathkal · B.Tech CSE · CGPA 8.85</div>
-                <div style="font-size:11.5px;color:var(--indigo-600);margin-top:2px;">Python 92%, PyTorch 88%, DSA 78%</div>
+                <div style="font-weight:600;font-size:14px;color:var(--text-primary);">Priya Sharma <span class="pill pill-emerald">94% Match</span></div>
+                <div style="font-size:12px;color:var(--text-muted);">NIT Surathkal · B.Tech CSE · CGPA 8.85</div>
+                <div style="font-size:11.5px;color:var(--primary-gold);margin-top:2px;">Python 92%, PyTorch 88%, DSA 78%</div>
               </div>
               <button class="btn btn-primary btn-xs" onclick="alert('Scheduling Round 2 with Priya Sharma');">Fast-Track</button>
             </div>
 
-            <div style="padding:12px;border:1px solid var(--slate-200);border-radius:10px;display:flex;justify-content:space-between;align-items:center;">
+            <div style="padding:12px;border:1px solid var(--border-main);background:var(--bg-secondary);border-radius:10px;display:flex;justify-content:space-between;align-items:center;">
               <div>
-                <div style="font-weight:600;font-size:14px;">Karthik Sundaram <span class="pill pill-emerald">92% Match</span></div>
-                <div style="font-size:12px;color:var(--slate-500);">IIT Madras · B.Tech CSE · CGPA 9.20</div>
-                <div style="font-size:11.5px;color:var(--indigo-600);margin-top:2px;">FastAPI 90%, Distributed Systems 86%</div>
+                <div style="font-weight:600;font-size:14px;color:var(--text-primary);">Karthik Sundaram <span class="pill pill-emerald">92% Match</span></div>
+                <div style="font-size:12px;color:var(--text-muted);">IIT Madras · B.Tech CSE · CGPA 9.20</div>
+                <div style="font-size:11.5px;color:var(--primary-gold);margin-top:2px;">FastAPI 90%, Distributed Systems 86%</div>
               </div>
               <button class="btn btn-primary btn-xs" onclick="alert('Scheduling Round 2 with Karthik Sundaram');">Fast-Track</button>
             </div>
@@ -1690,7 +1728,7 @@ function renderIndustryDashboard(container, tab) {
       <div class="card card-pad">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
           <div>
-            <div class="section-card-title">Live Postings on SkillBridge</div>
+            <div class="section-card-title">Live Postings on SkillPeek</div>
             <div class="section-card-sub">Active positions receiving verified applications</div>
           </div>
           <button class="btn btn-outline btn-sm" onclick="switchDashboardTab('manage-jobs')">Manage All Roles →</button>
@@ -1711,7 +1749,7 @@ function renderIndustryDashboard(container, tab) {
             </thead>
             <tbody>
               <tr>
-                <td><strong>Software Engineering Intern (AI/ML)</strong></td>
+                <td><strong style="color:var(--text-primary);">Software Engineering Intern (AI/ML)</strong></td>
                 <td>Bengaluru / Hybrid</td>
                 <td>₹1,15,000/mo</td>
                 <td>8</td>
@@ -1720,7 +1758,7 @@ function renderIndustryDashboard(container, tab) {
                 <td><button class="btn btn-outline btn-xs" onclick="switchDashboardTab('pipeline')">View Pipeline</button></td>
               </tr>
               <tr>
-                <td><strong>Cloud Infrastructure &amp; SRE Intern</strong></td>
+                <td><strong style="color:var(--text-primary);">Cloud Infrastructure &amp; SRE Intern</strong></td>
                 <td>Hyderabad / Remote</td>
                 <td>₹95,000/mo</td>
                 <td>5</td>
@@ -1754,22 +1792,22 @@ function renderIndustryDashboard(container, tab) {
           <div class="card card-pad" style="display:flex;flex-direction:column;justify-content:space-between;">
             <div>
               <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-                <h3 style="font-size:16.5px;">${job.title}</h3>
+                <h3 style="font-size:16.5px;color:var(--text-primary);">${job.title}</h3>
                 <span class="pill pill-emerald">Active</span>
               </div>
-              <div style="font-size:13px;color:var(--slate-500);margin-top:4px;">${job.location} · ${job.stipend} · ${job.duration}</div>
-              <p style="font-size:13px;color:var(--slate-600);margin-top:10px;line-height:1.5;">${job.description}</p>
+              <div style="font-size:13px;color:var(--text-muted);margin-top:4px;">${job.location} · ${job.stipend} · ${job.duration}</div>
+              <p style="font-size:13px;color:var(--text-secondary);margin-top:10px;line-height:1.5;">${job.description}</p>
               
               <div style="margin-top:12px;">
-                <div style="font-size:12px;font-weight:600;color:var(--slate-500);margin-bottom:6px;">Required Skills:</div>
+                <div style="font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:6px;">Required Skills:</div>
                 <div class="skill-tags">
                   ${job.skillsReq.map(s => `<span class="tag">${s}</span>`).join('')}
                 </div>
               </div>
             </div>
 
-            <div style="margin-top:18px;border-top:1px solid var(--slate-100);padding-top:14px;display:flex;justify-content:space-between;align-items:center;">
-              <span style="font-size:12.5px;color:var(--slate-500);">Openings: <strong>${job.openings}</strong></span>
+            <div style="margin-top:18px;border-top:1px solid var(--border-subtle);padding-top:14px;display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:12.5px;color:var(--text-muted);">Openings: <strong style="color:var(--text-primary);">${job.openings}</strong></span>
               <div style="display:flex;gap:8px;">
                 <button class="btn btn-outline btn-xs" onclick="switchDashboardTab('pipeline')">View Applicants</button>
                 <button class="btn btn-ghost btn-xs" onclick="showToast('Role paused for new applications', 'info')">Pause</button>
@@ -1812,7 +1850,7 @@ function renderIndustryDashboard(container, tab) {
             </thead>
             <tbody>
               <tr>
-                <td><strong>Priya Sharma</strong></td>
+                <td><strong style="color:var(--text-primary);">Priya Sharma</strong></td>
                 <td>NIT Surathkal (B.Tech CSE)</td>
                 <td>8.85</td>
                 <td>Python (92%), PyTorch (88%), DSA (78%)</td>
@@ -1820,7 +1858,7 @@ function renderIndustryDashboard(container, tab) {
                 <td><button class="btn btn-primary btn-xs" onclick="showToast('Fast-Track Interview Invite sent to Priya Sharma!', 'success')">Direct Invite</button></td>
               </tr>
               <tr>
-                <td><strong>Karthik Sundaram</strong></td>
+                <td><strong style="color:var(--text-primary);">Karthik Sundaram</strong></td>
                 <td>IIT Madras (B.Tech CSE)</td>
                 <td>9.20</td>
                 <td>FastAPI (90%), Distributed Systems (86%)</td>
@@ -1828,11 +1866,11 @@ function renderIndustryDashboard(container, tab) {
                 <td><button class="btn btn-primary btn-xs" onclick="showToast('Fast-Track Interview Invite sent to Karthik!', 'success')">Direct Invite</button></td>
               </tr>
               <tr>
-                <td><strong>Ananya Deshmukh</strong></td>
+                <td><strong style="color:var(--text-primary);">Ananya Deshmukh</strong></td>
                 <td>NITK (B.Tech IT)</td>
                 <td>9.12</td>
                 <td>Docker (88%), AWS (85%), Node.js (90%)</td>
-                <td><span class="pill pill-indigo">89% Fit</span></td>
+                <td><span class="pill pill-gold">89% Fit</span></td>
                 <td><button class="btn btn-primary btn-xs" onclick="showToast('Direct Invite sent to Ananya!', 'success')">Direct Invite</button></td>
               </tr>
             </tbody>
@@ -1853,33 +1891,33 @@ function renderIndustryDashboard(container, tab) {
 
       <div class="grid-3">
         <div class="card card-pad">
-          <div style="font-weight:700;font-size:15px;margin-bottom:12px;color:var(--indigo-900);">📥 Stage 1: Verified Applications (42)</div>
+          <div style="font-weight:700;font-size:15px;margin-bottom:12px;color:var(--primary-gold);">📥 Stage 1: Verified Applications (42)</div>
           <div style="display:flex;flex-direction:column;gap:10px;">
-            <div style="padding:12px;background:var(--slate-50);border-radius:10px;border:1px solid var(--slate-200);">
-              <div style="font-weight:600;font-size:13.5px;">Vikramaditya Sen (86% Fit)</div>
-              <div style="font-size:12px;color:var(--slate-500);">NIT Surathkal · Python &amp; SQL</div>
+            <div style="padding:12px;background:var(--bg-secondary);border-radius:10px;border:1px solid var(--border-main);">
+              <div style="font-weight:600;font-size:13.5px;color:var(--text-primary);">Vikramaditya Sen (86% Fit)</div>
+              <div style="font-size:12px;color:var(--text-muted);">NIT Surathkal · Python &amp; SQL</div>
               <button class="btn btn-outline btn-xs" style="margin-top:8px;" onclick="showToast('Moved Vikramaditya to Technical Round!', 'success')">Advance →</button>
             </div>
           </div>
         </div>
 
         <div class="card card-pad">
-          <div style="font-weight:700;font-size:15px;margin-bottom:12px;color:var(--sky-500);">⚡ Stage 2: Technical Interview (18)</div>
+          <div style="font-weight:700;font-size:15px;margin-bottom:12px;color:var(--sky-text);">⚡ Stage 2: Technical Interview (18)</div>
           <div style="display:flex;flex-direction:column;gap:10px;">
-            <div style="padding:12px;background:var(--sky-100);border-radius:10px;border:1px solid #BAE6FD;">
-              <div style="font-weight:600;font-size:13.5px;">Priya Sharma (94% Fit)</div>
-              <div style="font-size:12px;color:var(--indigo-900);">Interview scheduled tomorrow 3:30 PM</div>
+            <div style="padding:12px;background:var(--sky-bg);border-radius:10px;border:1px solid rgba(14,165,233,0.3);">
+              <div style="font-weight:600;font-size:13.5px;color:var(--text-primary);">Priya Sharma (94% Fit)</div>
+              <div style="font-size:12px;color:var(--sky-text);">Interview scheduled tomorrow 3:30 PM</div>
               <button class="btn btn-success btn-xs" style="margin-top:8px;" onclick="showToast('Offer letter generated for Priya Sharma!', 'success')">Rollout Offer 🎉</button>
             </div>
           </div>
         </div>
 
         <div class="card card-pad">
-          <div style="font-weight:700;font-size:15px;margin-bottom:12px;color:var(--emerald-500);">🎉 Stage 3: Offers Accepted (12)</div>
+          <div style="font-weight:700;font-size:15px;margin-bottom:12px;color:var(--emerald-text);">🎉 Stage 3: Offers Accepted (12)</div>
           <div style="display:flex;flex-direction:column;gap:10px;">
-            <div style="padding:12px;background:var(--emerald-100);border-radius:10px;border:1px solid #A7F3D0;">
-              <div style="font-weight:600;font-size:13.5px;">Rahul Nair (ECE)</div>
-              <div style="font-size:12px;color:#065F46;">Offer Signed · Joining Jan 2027</div>
+            <div style="padding:12px;background:var(--emerald-bg);border-radius:10px;border:1px solid rgba(16,185,129,0.3);">
+              <div style="font-weight:600;font-size:13.5px;color:var(--text-primary);">Rahul Nair (ECE)</div>
+              <div style="font-size:12px;color:var(--emerald-text);">Offer Signed · Joining Jan 2027</div>
             </div>
           </div>
         </div>
@@ -1901,14 +1939,28 @@ function renderIndustryCharts() {
         datasets: [{
           label: 'Applicant Proficiency %',
           data: [92, 88, 85, 84, 76, 74],
-          backgroundColor: '#4F46E5',
+          backgroundColor: '#FBBF24',
           borderRadius: 6
         }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        scales: { y: { min: 0, max: 100, ticks: { callback: v => v + '%' } } }
+        plugins: {
+          legend: { labels: { color: '#CBD5E1', font: { family: 'Inter', size: 12 } } }
+        },
+        scales: { 
+          y: { 
+            min: 0, 
+            max: 100, 
+            ticks: { color: '#94A3B8', callback: v => v + '%' },
+            grid: { color: 'rgba(255,255,255,0.06)' }
+          },
+          x: {
+            ticks: { color: '#94A3B8' },
+            grid: { display: false }
+          }
+        }
       }
     });
   }
@@ -1956,15 +2008,15 @@ function renderMentorDashboard(container, tab) {
       <div class="grid-2">
         <div class="card card-pad">
           <div class="section-card-title">Upcoming 1-on-1 Mentorship Sessions</div>
-          <div class="section-card-sub">Student bookings through SkillBridge</div>
+          <div class="section-card-sub">Student bookings through SkillPeek</div>
 
           <div style="display:flex;flex-direction:column;gap:14px;margin-top:16px;">
-            <div style="padding:14px;border:1px solid var(--slate-200);border-radius:12px;background:#fff;">
+            <div style="padding:14px;border:1px solid var(--border-main);border-radius:12px;background:var(--bg-secondary);">
               <div style="display:flex;justify-content:space-between;">
                 <div>
-                  <div style="font-weight:700;font-size:14.5px;">Priya Sharma (NIT Surathkal)</div>
-                  <div style="font-size:12.5px;color:var(--slate-500);">Topic: Distributed Systems &amp; Google Round 2 Prep</div>
-                  <div style="font-size:12px;color:var(--indigo-600);margin-top:4px;">🕒 Today, 5:00 PM IST (30 Mins)</div>
+                  <div style="font-weight:700;font-size:14.5px;color:var(--text-primary);">Priya Sharma (NIT Surathkal)</div>
+                  <div style="font-size:12.5px;color:var(--text-muted);">Topic: Distributed Systems &amp; Google Round 2 Prep</div>
+                  <div style="font-size:12px;color:var(--primary-gold);margin-top:4px;">🕒 Today, 5:00 PM IST (30 Mins)</div>
                 </div>
                 <div>
                   <button class="btn btn-primary btn-xs" onclick="window.open('https://meet.google.com', '_blank');showToast('Launching Google Meet...', 'info');">Join Meet ↗</button>
@@ -1972,12 +2024,12 @@ function renderMentorDashboard(container, tab) {
               </div>
             </div>
 
-            <div style="padding:14px;border:1px solid var(--slate-200);border-radius:12px;background:#fff;">
+            <div style="padding:14px;border:1px solid var(--border-main);border-radius:12px;background:var(--bg-secondary);">
               <div style="display:flex;justify-content:space-between;">
                 <div>
-                  <div style="font-weight:700;font-size:14.5px;">Arjun Verma (IIT Bombay)</div>
-                  <div style="font-size:12.5px;color:var(--slate-500);">Topic: Cloud Architecture Portfolio Audit</div>
-                  <div style="font-size:12px;color:var(--slate-400);margin-top:4px;">🕒 Tomorrow, 6:30 PM IST (45 Mins)</div>
+                  <div style="font-weight:700;font-size:14.5px;color:var(--text-primary);">Arjun Verma (IIT Bombay)</div>
+                  <div style="font-size:12.5px;color:var(--text-muted);">Topic: Cloud Architecture Portfolio Audit</div>
+                  <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">🕒 Tomorrow, 6:30 PM IST (45 Mins)</div>
                 </div>
                 <div>
                   <button class="btn btn-outline btn-xs" onclick="showToast('Session confirmed!', 'success')">Confirmed</button>
@@ -1992,9 +2044,9 @@ function renderMentorDashboard(container, tab) {
           <div class="section-card-sub">Students requesting skill verification for projects</div>
 
           <div style="display:flex;flex-direction:column;gap:12px;margin-top:14px;">
-            <div style="padding:12px;background:var(--slate-50);border-radius:10px;border:1px solid var(--slate-200);">
-              <div style="font-weight:600;font-size:13.5px;">Priya Sharma — Distributed KV Store Repo</div>
-              <p style="font-size:12.5px;color:var(--slate-600);margin:4px 0;">Implemented consistent hashing with virtual nodes in Python.</p>
+            <div style="padding:12px;background:var(--bg-secondary);border-radius:10px;border:1px solid var(--border-main);">
+              <div style="font-weight:600;font-size:13.5px;color:var(--text-primary);">Priya Sharma — Distributed KV Store Repo</div>
+              <p style="font-size:12.5px;color:var(--text-secondary);margin:4px 0;">Implemented consistent hashing with virtual nodes in Python.</p>
               <div style="display:flex;gap:8px;margin-top:8px;">
                 <button class="btn btn-success btn-xs" onclick="showToast('Endorsed Priya Sharma Distributed Systems skill!', 'success')">✓ Endorse +10%</button>
                 <button class="btn btn-outline btn-xs" onclick="alert('Opening GitHub repo diff...')">Review Code</button>
@@ -2020,8 +2072,8 @@ function renderInternshipCardMarkup(job) {
         <div style="display:flex;gap:12px;align-items:center;">
           <div class="company-logo" style="background:${job.logoBg};">${job.logoText}</div>
           <div>
-            <h4 style="font-size:15px;line-height:1.2;">${job.title}</h4>
-            <div style="font-size:13px;font-weight:600;color:var(--slate-700);margin-top:2px;">${job.company}</div>
+            <h4 style="font-size:15px;line-height:1.2;color:var(--text-primary);">${job.title}</h4>
+            <div style="font-size:13px;font-weight:600;color:var(--text-muted);margin-top:2px;">${job.company}</div>
           </div>
         </div>
         <div class="match-badge ${matchClass}">
@@ -2036,7 +2088,7 @@ function renderInternshipCardMarkup(job) {
         <span>⏱ ${job.duration}</span>
       </div>
 
-      <p style="font-size:13px;color:var(--slate-500);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">
         ${job.description}
       </p>
 
@@ -2128,18 +2180,18 @@ function openApplyModal(jobId) {
   openModal(`
     <div class="modal-head">
       <div>
-        <h3 style="font-size:18px;">Apply to ${job.company}</h3>
-        <div style="font-size:13px;color:var(--slate-500);">${job.title}</div>
+        <h3 style="font-size:18px;color:var(--text-primary);">Apply to ${job.company}</h3>
+        <div style="font-size:13px;color:var(--text-muted);">${job.title}</div>
       </div>
       <div class="modal-close" onclick="closeModal()">✕</div>
     </div>
 
-    <div style="background:var(--slate-50);padding:14px;border-radius:12px;margin-bottom:18px;border:1px solid var(--slate-200);">
+    <div style="background:var(--bg-secondary);padding:14px;border-radius:12px;margin-bottom:18px;border:1px solid var(--border-main);">
       <div style="display:flex;justify-content:space-between;align-items:center;">
-        <span style="font-size:13px;color:var(--slate-600);">Auto-Matched Skill Score</span>
+        <span style="font-size:13px;color:var(--text-secondary);">Auto-Matched Skill Score</span>
         <span class="pill pill-emerald" style="font-size:13px;">${job.matchScore}% Verified Fit</span>
       </div>
-      <div style="font-size:12px;color:var(--slate-400);margin-top:6px;">Your verified skills (${job.skillsReq.join(', ')}) will be transmitted directly to ${job.company}'s ATS.</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:6px;">Your verified skills (${job.skillsReq.join(', ')}) will be transmitted directly to ${job.company}'s ATS.</div>
     </div>
 
     <div class="field">
@@ -2201,18 +2253,18 @@ function renderQuizStep() {
   openModal(`
     <div class="modal-head">
       <div>
-        <span class="pill pill-indigo" style="margin-bottom:6px;">Skill Assessment</span>
-        <h3 style="font-size:18px;">${skillName}</h3>
+        <span class="pill pill-gold" style="margin-bottom:6px;">Skill Assessment</span>
+        <h3 style="font-size:18px;color:var(--text-primary);">${skillName}</h3>
       </div>
       <div class="modal-close" onclick="closeModal()">✕</div>
     </div>
 
-    <div style="display:flex;justify-content:space-between;font-size:12.5px;color:var(--slate-500);margin-bottom:12px;">
+    <div style="display:flex;justify-content:space-between;font-size:12.5px;color:var(--text-muted);margin-bottom:12px;">
       <span>Question ${currentQuestionIndex + 1} of ${questions.length}</span>
       <span>Pass threshold: 60%+</span>
     </div>
 
-    <div style="font-size:15px;font-weight:600;margin-bottom:18px;color:var(--slate-900);line-height:1.45;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:18px;color:var(--text-primary);line-height:1.45;">
       ${q.q}
     </div>
 
@@ -2274,20 +2326,20 @@ function finishQuiz() {
   openModal(`
     <div style="text-align:center;padding:10px 0;">
       <div style="font-size:52px;margin-bottom:12px;">${passed ? '🎉' : '📚'}</div>
-      <h2 style="font-size:22px;color:var(--slate-900);">${passed ? 'Assessment Passed!' : 'Needs Revision'}</h2>
-      <p style="font-size:14px;color:var(--slate-500);margin-top:6px;">
+      <h2 style="font-size:22px;color:var(--text-primary);">${passed ? 'Assessment Passed!' : 'Needs Revision'}</h2>
+      <p style="font-size:14px;color:var(--text-muted);margin-top:6px;">
         You scored <strong>${userScore}/${questions.length} (${pct}%)</strong> on ${skillName}.
       </p>
 
       ${passed ? `
-        <div style="background:var(--emerald-100);padding:14px;border-radius:12px;margin:18px 0;border:1px solid #A7F3D0;">
-          <div style="font-weight:700;color:#065F46;">+10% Verified Proficiency Added!</div>
-          <div style="font-size:12.5px;color:#047857;margin-top:2px;">Your match percentage for Google and Microsoft has been updated automatically.</div>
+        <div style="background:var(--emerald-bg);padding:14px;border-radius:12px;margin:18px 0;border:1px solid rgba(16,185,129,0.3);">
+          <div style="font-weight:700;color:var(--emerald-text);">+10% Verified Proficiency Added!</div>
+          <div style="font-size:12.5px;color:var(--text-secondary);margin-top:2px;">Your match percentage for Google and Microsoft has been updated automatically.</div>
         </div>
       ` : `
-        <div style="background:var(--amber-100);padding:14px;border-radius:12px;margin:18px 0;border:1px solid #FDE68A;">
-          <div style="font-weight:700;color:#92400E;">Review Recommended Modules</div>
-          <div style="font-size:12.5px;color:#78350F;margin-top:2px;">Review the recommended learning roadmap and try again in 24 hours.</div>
+        <div style="background:var(--amber-bg);padding:14px;border-radius:12px;margin:18px 0;border:1px solid rgba(245,158,11,0.3);">
+          <div style="font-weight:700;color:var(--amber-text);">Review Recommended Modules</div>
+          <div style="font-size:12.5px;color:var(--text-secondary);margin-top:2px;">Review the recommended learning roadmap and try again in 24 hours.</div>
         </div>
       `}
 
@@ -2307,8 +2359,8 @@ function openBookMentorModal(mentorId) {
   openModal(`
     <div class="modal-head">
       <div>
-        <h3 style="font-size:18px;">Book 1:1 with ${mentor.name}</h3>
-        <div style="font-size:13px;color:var(--slate-500);">${mentor.company}</div>
+        <h3 style="font-size:18px;color:var(--text-primary);">Book 1:1 with ${mentor.name}</h3>
+        <div style="font-size:13px;color:var(--text-muted);">${mentor.company}</div>
       </div>
       <div class="modal-close" onclick="closeModal()">✕</div>
     </div>
@@ -2354,8 +2406,8 @@ function openPostInternshipModal() {
   openModal(`
     <div class="modal-head">
       <div>
-        <h3 style="font-size:18px;">Post New Internship</h3>
-        <div style="font-size:13px;color:var(--slate-500);">Auto-matched to students across 250+ partner universities</div>
+        <h3 style="font-size:18px;color:var(--text-primary);">Post New Internship</h3>
+        <div style="font-size:13px;color:var(--text-muted);">Auto-matched to students across 250+ partner universities</div>
       </div>
       <div class="modal-close" onclick="closeModal()">✕</div>
     </div>
@@ -2435,8 +2487,8 @@ function openAddSkillModal() {
   openModal(`
     <div class="modal-head">
       <div>
-        <h3 style="font-size:18px;">Add Skill to Matrix</h3>
-        <div style="font-size:13px;color:var(--slate-500);">Self-report or verify with an automated quiz</div>
+        <h3 style="font-size:18px;color:var(--text-primary);">Add Skill to Matrix</h3>
+        <div style="font-size:13px;color:var(--text-muted);">Self-report or verify with an automated quiz</div>
       </div>
       <div class="modal-close" onclick="closeModal()">✕</div>
     </div>
@@ -2448,7 +2500,7 @@ function openAddSkillModal() {
         <option>Backend &amp; Data</option><option>Frontend</option><option>Cloud &amp; DevOps</option><option>AI/ML</option>
       </select>
     </div>
-    <div class="field"><label>Self-Estimated Proficiency (%)</label><input type="range" min="30" max="95" value="75" id="addSkillLevel" oninput="document.getElementById('skillLevelVal').innerText = this.value + '%'"><div style="text-align:right;font-weight:600;font-size:13px;" id="skillLevelVal">75%</div></div>
+    <div class="field"><label>Self-Estimated Proficiency (%)</label><input type="range" min="30" max="95" value="75" id="addSkillLevel" oninput="document.getElementById('skillLevelVal').innerText = this.value + '%'"><div style="text-align:right;font-weight:600;font-size:13px;color:var(--primary-gold);" id="skillLevelVal">75%</div></div>
 
     <div style="display:flex;gap:10px;margin-top:20px;">
       <button class="btn btn-ghost btn-block" onclick="closeModal()">Cancel</button>
@@ -2483,8 +2535,8 @@ function openScheduleDriveModal() {
   openModal(`
     <div class="modal-head">
       <div>
-        <h3 style="font-size:18px;">Schedule Corporate Recruitment Drive</h3>
-        <div style="font-size:13px;color:var(--slate-500);">Coordinate pooled or campus-exclusive recruitment</div>
+        <h3 style="font-size:18px;color:var(--text-primary);">Schedule Corporate Recruitment Drive</h3>
+        <div style="font-size:13px;color:var(--text-muted);">Coordinate pooled or campus-exclusive recruitment</div>
       </div>
       <div class="modal-close" onclick="closeModal()">✕</div>
     </div>
@@ -2505,7 +2557,7 @@ function openNotificationsModal() {
   openModal(`
     <div class="modal-head">
       <div>
-        <h3 style="font-size:18px;">Notifications &amp; Alerts</h3>
+        <h3 style="font-size:18px;color:var(--text-primary);">Notifications &amp; Alerts</h3>
       </div>
       <div class="modal-close" onclick="closeModal()">✕</div>
     </div>
